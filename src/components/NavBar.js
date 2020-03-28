@@ -23,7 +23,7 @@ const Flex = styled(Col)`
 
 function NavBar() {
   return (
-    <ClearHeader style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+    <ClearHeader style={{ width: '100%' }}>
       <Row style={{width: '100%'}} >
         <Flex span={12}>
           <TopLogo src={logo} alt="logo" />
