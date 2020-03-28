@@ -45,9 +45,11 @@ const FormItem = styled(Form.Item)`
 `;
 
 
-function LandingContent() {
+function LandingContent(props) {
+    const { setCurrentStep } = props;
     const onFinish = values => {
-        console.log('Received values of form: ', values);
+        console.log(values);
+        setCurrentStep('collectInfo');
     };
 
     return (
@@ -59,26 +61,23 @@ function LandingContent() {
                 <Form.Item
                     name="firstname"
                     noStyle
-                    rules={[{ required: true, message: 'First name is required' }]}
                 >
                     <StyledInput placeholder="First Name" />
                 </Form.Item>
                 <Form.Item
                     name="lastname"
                     noStyle
-                    rules={[{ required: true, message: 'Last name is required' }]}
                 >
                     <StyledInput placeholder="Last Name" />
                 </Form.Item>
                 <Form.Item
                     name="email"
                     noStyle
-                    rules={[{ required: true, message: 'Email is required' }]}
                 >
                     <StyledInput placeholder="Email" />
                 </Form.Item>
                 <FormItem>
-                    <FormButton type="primary" htmlType="submit">
+                    <FormButton type="primary" htmlType="submit" disabled={false}>
                         Register
                     </FormButton>
                 </FormItem>

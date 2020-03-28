@@ -17,7 +17,8 @@ const BlockContent = styled(Content)`
 `;
 
 
-function LandingContent() {
+function LandingContent(props) {
+    const { setCurrentStep } = props;
     return (
         <BlockContent>
             <Row style={{width: '100%', height: '100%'}} >
@@ -25,7 +26,7 @@ function LandingContent() {
                     <ValueProp />
                 </Flex>
                 <Flex span={12}>
-                    <CTARegister />
+                    <CTARegister setCurrentStep={setCurrentStep} />
                 </Flex>
             </Row>
         </BlockContent>
