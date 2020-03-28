@@ -16,16 +16,13 @@ const ValuePropTitle = styled(Title)`
   padding-top: 50px;
 `;
 
-const SubTitle = styled(Title)`
-  padding-bottom: 50px;
-`;
 
 
 function LandingContent() {
     return (
         <FlexContainer>
             <ValuePropTitle>New way to donate PPE for those who need it most</ValuePropTitle>
-            <SubTitle level={3}>Sign up now, to donate your supplies</SubTitle>
+            <Title level={3}>Sign up now, and donate your supplies</Title>
         </FlexContainer>
     );
 }
