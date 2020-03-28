@@ -1,13 +1,17 @@
-import 'antd/dist/antd.css';
-import NavBar from './components/NavBar'
-import LandingContent from './components/LandingContent'
-import React from 'react';
-import './App.css';
-import styled from 'styled-components';
-import { Layout } from 'antd';
+import "antd/dist/antd.css";
+import "./App.css";
+import logo from "./logo.svg";
+import React, { Component } from "react";
+import styled from "styled-components";
+import { Layout } from "antd";
+import AppFooter from "./AppFooter";
+import NavBar from "./components/NavBar";
+import LandingContent from "./components/LandingContent";
+
+const { Footer } = Layout;
 
 const AppWrapper = styled(Layout)`
-  background: #FFFFFF;
+  background: #ffffff;
   height: 100%;
 `;
 
@@ -16,7 +20,7 @@ function App() {
     <AppWrapper>
       <NavBar />
       <LandingContent />
-      {/* <Footer style={{ textAlign: 'center' }}>Stay Safe, Keep Space ©2020 Created by WinHacks Team 4829843</Footer> */}
+      <AppFooter />
     </AppWrapper>
   );
 }

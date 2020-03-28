@@ -9,11 +9,11 @@ const FlexContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: 150px;
+  margin: 10%;
 `;
 
 const ValuePropTitle = styled(Title)`
-  padding-top: 50px;
+  padding-top: 5%;
 `;
 
 
