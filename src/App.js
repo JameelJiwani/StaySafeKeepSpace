@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+<<<<<<< Updated upstream
 import { Button } from 'antd';
 import 'antd/dist/antd.css';
 
@@ -21,6 +22,26 @@ function App() {
        <h1>Listings</h1>
       </header>
     </div>
+=======
+import styled from 'styled-components';
+import { Layout } from 'antd';
+import AppFooter from './AppFooter';
+
+const { Footer } = Layout;
+
+const AppWrapper = styled(Layout)`
+  background: #FFFFFF;
+  height: 100%;
+`;
+
+function App() {
+  return (
+    <AppWrapper>
+      <NavBar />
+      <LandingContent />
+      <AppFooter/>
+    </AppWrapper>
+>>>>>>> Stashed changes
   );
 }
 
