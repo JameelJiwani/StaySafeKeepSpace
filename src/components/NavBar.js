@@ -8,6 +8,7 @@ const { Title } = Typography;
 
 const TopLogo = styled.img`
   height: 50px;
+  margin: 15px;
 `;
 
 const ClearHeader = styled(Header)`
@@ -20,6 +21,10 @@ const Flex = styled(Col)`
   justify-content: center;
 `;
 
+const CompanyName = styled(Title)`
+  padding-top: 25px;
+`;
+
 
 function NavBar() {
   return (
@@ -27,7 +32,7 @@ function NavBar() {
       <Row style={{width: '100%'}} >
         <Flex span={12}>
           <TopLogo src={logo} alt="logo" />
-          <Title level={3}>Stay Safe, Keep Space</Title>
+          <CompanyName level={3}>Stay Safe, Keep Space</CompanyName>
         </Flex>
       </Row>
     </ClearHeader>
