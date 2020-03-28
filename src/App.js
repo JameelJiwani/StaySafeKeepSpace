@@ -4,6 +4,7 @@ import "./App.css";
 import styled from "styled-components";
 import { Layout } from "antd";
 import AppFooter from "./AppFooter";
+import "antd/dist/antd.css";
 
 const { Footer } = Layout;
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { Layout } from "antd";
 import styled from "styled-components";
-import 'antd/dist/antd.css';
 
 const { Footer } = Layout;
 
