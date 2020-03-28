@@ -1,28 +1,25 @@
 import 'antd/dist/antd.css';
+import NavBar from './components/NavBar'
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Button } from 'antd';
+import styled from 'styled-components';
+import { Layout, Menu, Breadcrumb } from 'antd';
+
+const { Header, Content, Footer } = Layout;
+
+const AppWrapper = styled(Layout)`
+  background: #FFFFFF;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <Button type="primary">Primary</Button>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppWrapper>
+      <NavBar />
+      <Content>
+        <p> This is my content ! </p>
+      </Content>
+      {/* <Footer style={{ textAlign: 'center' }}>Stay Safe, Keep Space ©2020 Created by WinHacks Team 4829843</Footer> */}
+    </AppWrapper>
   );
 }
 
