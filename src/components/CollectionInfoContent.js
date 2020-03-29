@@ -52,12 +52,9 @@ const FormButton = styled(Button)`
   width: 60%;
 `;
 
-function CollectionInfoContent() {
+function CollectionInfoContent(props) {
+  const { setCurrentStep } = props;
   const [options, setOptions] = useState({});
-
-  function onChange(e) {
-    console.log(`checked = ${e.target.checked}`);
-  }
 
   function toggleOptions(value) {
     let copyOptions = { ...options };
@@ -82,6 +79,10 @@ function CollectionInfoContent() {
       default:
     }
     console.log(options);
+  }
+
+  function submitData() {
+    setCurrentStep('success');
   }
 
   return (
@@ -127,7 +128,7 @@ function CollectionInfoContent() {
           <StyledInput placeholder="Address Here" size="large" />
         </Row>
         <Row center="xs">
-          <FormButton type="primary" htmlType="submit">
+          <FormButton type="primary" onClick={() => submitData()}>
             Donate
           </FormButton>
         </Row>
