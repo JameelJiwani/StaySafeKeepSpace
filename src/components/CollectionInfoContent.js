@@ -157,9 +157,10 @@ function CollectionInfoContent(props) {
             <label style={{ marginTop: "3px" }}>Full body suits</label>
           </IconButton>
         </Row>
+        <BlockContent>
         <Modal
             visible={visible}
-            title="Title"
+            title="Please provide details"
             onOk={handleOk}
             onCancel={handleCancel}
             footer={[
@@ -188,6 +189,7 @@ function CollectionInfoContent(props) {
           </Form.Item>
 
         </Modal>
+        </BlockContent>
         <InnerCol>
         <Row left="xs" width="60px" style={{ paddingLeft: "15px" }}>
           <Title level={3}>Address</Title>
