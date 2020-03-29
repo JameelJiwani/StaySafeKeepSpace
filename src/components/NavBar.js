@@ -25,12 +25,11 @@ const CompanyName = styled(Title)`
   padding-top: 25px;
 `;
 
-
 function NavBar() {
   return (
     <ClearHeader style={{ width: '100%' }}>
-      <Row style={{width: '100%'}} >
-        <Flex >
+      <Row style={{ width: '100%' }}>
+        <Flex>
           <TopLogo src={logo} alt="logo" />
         </Flex>
       </Row>
