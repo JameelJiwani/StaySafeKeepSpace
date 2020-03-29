@@ -61,6 +61,29 @@ const StyledInput = styled(Input)`
   padding: 5px;
 `;
 
+
+const FormItem = styled(Form.Item)`
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  width: 100%;
+  && .ant-form-item-control-input-content {
+    display: flex;
+    justify-content: center;
+  }
+`;
+
+const AddressItem = styled(Form.Item)`
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  && .ant-form-item-control-input-content {
+    display: flex;
+    justify-content: center;
+  }
+`;
+
+
 const FormButton = styled(Button)`
   margin-top: 15px;
   border-radius: 5px;
@@ -69,32 +92,30 @@ const FormButton = styled(Button)`
   padding: 5px;
   width: 40%;
 `;
+const FlexForm = styled(Form)`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: #f5f5f5;
+  border-radius: 5px;
+  padding: 20px;
+  margin: auto;
+`;
 
 function CollectionInfoContent(props) {
   const { setCurrentStep } = props;
   console.log("set current", props);
   const [options, setOptions] = useState({});
 
-  // modal trigger
-  const [ visible, setVisible] = useState(false);
-  const [ product , setProduct] = useState('');
-  // pop
-  const triggerModal = (name) => {
-    setVisible(true);
-    setProduct(name);
-  }
-  // onClose 
-  const closeModal = () => setVisible(false);
-  const handleOk = () => {
+  const [visible, setVisible] = useState(false);
+  const [ address, setAddress] = useState('');
+  const [ product , setProduct] = useState('');  
 
-    setVisible(false);
-  };
-
-  const handleCancel = () => {
-    setVisible(false);
-  };
-
-
+    // pop
+    const triggerModal = (name) => {
+      setVisible(true);
+      setProduct(name);
+    }
 
   function toggleOptions(value) {
     let copyOptions = { ...options };
@@ -123,9 +144,105 @@ function CollectionInfoContent(props) {
     console.log(options);
   }
 
-  function submitData() {
+  function submitData(e) {
+
+    console.log(address)
     setCurrentStep('success');
+    // e.preventDefault();
+    
   }
+
+  const [items, setItems] = useState([]);
+
+  function ModalCustom (props) {
+
+
+    // const [ name, setName] = useState(null);
+    // const [ amount, setAmount] = useState(null);
+    // const [ description, setDescription] = useState(null);
+  
+    
+      // onClose 
+      const handleOk = () => {
+        setVisible(false);
+      };
+    
+      const handleCancel = () => {
+        setVisible(false);
+      };
+    
+      const addProductToList = (name, amount, description) => {
+        var product = {
+          name,
+          description,
+          amount,
+        };
+        var tempList = items;
+        tempList.push(product);
+        setItems(tempList);
+        // console.log("prodcut", product);
+        // console.log('list origin', items);
+      
+        setVisible(false);
+
+
+      }
+      const onFinish = values => {
+
+        console.log("onfinsh values of the product", values);
+        // setAmount(values.amount);
+        // setName(props.name);
+        // setDescription(values.description);
+
+
+        // console.log("onfinsh values of the product", values.amount);
+
+        // console.log("onfinsh values of the product", props.name);
+
+        // console.log("onfinsh values of the product", values.description);
+        addProductToList(props.name, values.amount, values.description);
+      }
+    return (
+      <Modal
+          closable={true}
+          footer={null}
+          visible={props.visible}
+          title={props.name}
+          onCancel={handleCancel}
+          footer={[
+            <Button key="back" onClick={handleCancel}>
+              Return
+            </Button>
+          ]}
+      >
+      <FlexForm onFinish={onFinish}>
+        <Form.Item>
+          <Title level={3}>More Information</Title>
+        </Form.Item>
+        
+        <Form.Item
+            name="description"
+            rules={[{ required: true, message: " " }]}
+                
+        >
+    
+          <StyledInput placeholder="Description" />
+        </Form.Item>
+        <Form.Item
+            name="amount"
+            rules={[{ required: true, message: " " }]}
+        >
+          <StyledInput placeholder="quantity" />
+        </Form.Item>
+        <FormItem>
+              <FormButton type="primary" htmlType="submit">
+              Add
+              </FormButton>
+        </FormItem>
+        </FlexForm>
+      </Modal>
+      )
+  };
 
   return (
     <BlockContent>
@@ -168,7 +285,10 @@ function CollectionInfoContent(props) {
           <Title level={3}>Address</Title>
         </Row>
         <Row>
-          <StyledInput placeholder="Address Here" size="large" />
+         
+          <StyledInput placeholder="Address Here" size="large"  onChange={e => setAddress(e.target.value)}/>
+      
+        
         </Row>
         </InnerCol>
         <Row center="xs">
@@ -179,37 +299,7 @@ function CollectionInfoContent(props) {
       </BlockCol>
 
       <div>
-      <Modal
-            visible={visible}
-            title={product}
-            onOk={handleOk}
-            onCancel={handleCancel}
-            footer={[
-              <Button key="back" onClick={handleCancel}>
-                Return
-              </Button>,
-              <Button key="submit" type="primary" onClick={handleOk}>
-                Submit
-              </Button>,
-            ]}
-        >
-          <Form.Item>
-            <Title level={3}>More Information</Title>
-          </Form.Item>
-          <Form.Item
-              name="description"
-              rules={[{ required: true, message: " " }]}
-          >
-            <StyledInput placeholder="Description" />
-          </Form.Item>
-          <Form.Item
-              name="quantity"
-              rules={[{ required: true, message: " " }]}
-          >
-            <StyledInput placeholder="quantity" />
-          </Form.Item>
-
-        </Modal>
+      <ModalCustom visible={visible} name={product}/>
       </div>
     </BlockContent>
   );
