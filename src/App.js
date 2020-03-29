@@ -6,15 +6,10 @@ import React, {useState} from 'react';
 import './App.css';
 import styled from 'styled-components';
 import { Layout } from 'antd';
-import image from './images/reach-up.jpg'
 
 const AppWrapper = styled(Layout)`
-  // background-image: url(${image});
-  // background-position: bottom;
-  // background=size: 100vw 100vh;
   background: white;
   height: 100%;
-  z-index: 1;
 `;
 
 function App() {
