@@ -6,7 +6,7 @@ import FaceMask from "../Icons/FaceMask";
 import Gloves from "../Icons/Gloves";
 import HandSanitizer from "../Icons/HandSanitizer";
 import Suit from "../Icons/Suit";
-import firebase from 'firebase'
+import firebase from './firebase'
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -94,6 +94,10 @@ function CollectionInfoContent() {
   function onChange(e) {
     console.log(`checked = ${e.target.checked}`);
   }
+
+  function CollectionInfoContent(props) {
+  const { setCurrentStep } = props;
+  const [options, setOptions] = useState({});
 
   function toggleOptions(value) {
     let copyOptions = { ...options };
