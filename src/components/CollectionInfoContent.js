@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Form, Layout, Checkbox, Button, Typography, Input } from "antd";
+import { Form, Layout, Checkbox, Button, Typography, Input, Modal } from "antd";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import styled from "styled-components";
 import FaceMask from "../Icons/FaceMask";
 import Gloves from "../Icons/Gloves";
 import HandSanitizer from "../Icons/HandSanitizer";
 import Suit from "../Icons/Suit";
+
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -72,30 +73,45 @@ const FormButton = styled(Button)`
 
 function CollectionInfoContent() {
   const [options, setOptions] = useState({});
+  const [ visible, setVisible] = useState(false);
 
-  function onChange(e) {
-    console.log(`checked = ${e.target.checked}`);
-  }
+  const showModal = (value) => {
+    setVisible(true);
+  };
+
+  const handleOk = () => {
+
+      setVisible(false);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
   function toggleOptions(value) {
     let copyOptions = { ...options };
+    showModal(value);
     switch (value) {
       case "faceMask":
         copyOptions.faceMask = copyOptions.faceMask === true ? false : true;
         setOptions(copyOptions);
+
         break;
       case "gloves":
         copyOptions.gloves = copyOptions.gloves === true ? false : true;
         setOptions(copyOptions);
+
         break;
       case "handSanitizer":
         copyOptions.handSanitizer =
           copyOptions.handSanitizer === true ? false : true;
         setOptions(copyOptions);
+
         break;
       case "suit":
         copyOptions.suit = copyOptions.suit === true ? false : true;
         setOptions(copyOptions);
+
         break;
       default:
     }
@@ -138,6 +154,37 @@ function CollectionInfoContent() {
             <label style={{ marginTop: "3px" }}>Full body suits</label>
           </IconButton>
         </Row>
+        <Modal
+            visible={visible}
+            title="Title"
+            onOk={handleOk}
+            onCancel={handleCancel}
+            footer={[
+              <Button key="back" onClick={handleCancel}>
+                Return
+              </Button>,
+              <Button key="submit" type="primary" onClick={handleOk}>
+                Submit
+              </Button>,
+            ]}
+        >
+          <Form.Item>
+            <Title level={3}>More Information</Title>
+          </Form.Item>
+          <Form.Item
+              name="description"
+              rules={[{ required: true, message: " " }]}
+          >
+            <StyledInput placeholder="Description" />
+          </Form.Item>
+          <Form.Item
+              name="quantity"
+              rules={[{ required: true, message: " " }]}
+          >
+            <StyledInput placeholder="quantity" />
+          </Form.Item>
+
+        </Modal>
         <InnerCol>
         <Row left="xs" width="60px" style={{ paddingLeft: "15px" }}>
           <Title level={3}>Address</Title>
@@ -157,3 +204,4 @@ function CollectionInfoContent() {
 }
 
 export default CollectionInfoContent;
+
