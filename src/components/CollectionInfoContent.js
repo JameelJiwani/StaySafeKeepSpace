@@ -99,6 +99,10 @@ function CollectionInfoContent() {
   const { setCurrentStep } = props;
   const [options, setOptions] = useState({});
 
+function CollectionInfoContent(props) {
+  const { setCurrentStep } = props;
+  const [options, setOptions] = useState({});
+
   function toggleOptions(value) {
     let copyOptions = { ...options };
     switch (value) {
@@ -122,6 +126,10 @@ function CollectionInfoContent() {
       default:
     }
     console.log(options);
+  }
+
+  function submitData() {
+    setCurrentStep('success');
   }
 
   return (
@@ -169,7 +177,7 @@ function CollectionInfoContent() {
         </Row>
         </InnerCol>
         <Row center="xs">
-          <FormButton type="primary" htmlType="submit">
+          <FormButton type="primary" onClick={() => submitData()}>
             Donate
           </FormButton>
         </Row>

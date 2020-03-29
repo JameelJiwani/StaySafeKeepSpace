@@ -23,6 +23,7 @@ const Flex = styled(Col)`
 
 const CompanyName = styled(Title)`
   padding-top: 25px;
+  white-space: nowrap;
 `;
 
 function NavBar() {
@@ -31,6 +32,7 @@ function NavBar() {
       <Row style={{ width: '100%' }}>
         <Flex>
           <TopLogo src={logo} alt="logo" />
+          <CompanyName level={4}>Stay Safe, Keep Space</CompanyName>
         </Flex>
       </Row>
     </ClearHeader>
