@@ -15,11 +15,25 @@ const BlockContent = styled(Content)`
   position: center;
   justify-content: center;
   flex-direction: row;
-  background: #f5f5f5;
   border-radius: 5px;
   padding: 40px;
   padding-bottom: 200px;
   margin: auto;
+`;
+
+const BlockCol = styled(Col)`
+  position: center;
+  justify-content: center;
+  background: #f5f5f5;
+  width: 95%;
+  border-radius: 5px;
+  padding: 20px;
+  align-items: center;
+`;
+
+const InnerCol = styled(Col)`
+  margin-left: 180px;
+  margin-right: 180px;
 `;
 
 const IconButton = styled(Button)`
@@ -36,12 +50,13 @@ const IconButton = styled(Button)`
 
   }
   &&.selected {
-    border-color: blue !important;
+    border-color: lightblue !important;
   }
 `;
 
 const StyledInput = styled(Input)`
   border-radius: 5px;
+  width: 34;
   margin: 10px;
   padding: 5px;
 `;
@@ -49,7 +64,10 @@ const StyledInput = styled(Input)`
 const FormButton = styled(Button)`
   margin-top: 15px;
   border-radius: 5px;
-  width: 60%;
+  margin-left:200px;
+  margin-right:200px;
+  padding: 5px;
+  width: 40%;
 `;
 
 function CollectionInfoContent() {
@@ -86,11 +104,11 @@ function CollectionInfoContent() {
 
   return (
     <BlockContent>
-      <Col>
+      <BlockCol>
         <Row center="xs">
           <Title level={5}>Submission</Title>
         </Row>
-        <Row style={{ marginBottom: "15px" }}>
+        <Row style={{ marginBottom: "15px" }} center="xs">
           <IconButton
             className={options.faceMask ? "selected" : ""}
             onClick={() => toggleOptions("faceMask")}
@@ -120,18 +138,20 @@ function CollectionInfoContent() {
             <label style={{ marginTop: "3px" }}>Full body suits</label>
           </IconButton>
         </Row>
-        <Row left="xs" style={{ paddingLeft: "15px" }}>
+        <InnerCol>
+        <Row left="xs" width="60px" style={{ paddingLeft: "15px" }}>
           <Title level={3}>Address</Title>
         </Row>
         <Row>
           <StyledInput placeholder="Address Here" size="large" />
         </Row>
+        </InnerCol>
         <Row center="xs">
           <FormButton type="primary" htmlType="submit">
             Donate
           </FormButton>
         </Row>
-      </Col>
+      </BlockCol>
     </BlockContent>
   );
 }
