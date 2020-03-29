@@ -1,11 +1,15 @@
 import 'antd/dist/antd.css';
-import NavBar from './components/NavBar'
-import LandingContent from './components/LandingContent'
-import CollectionInfoContent from './components/CollectionInfoContent'
-import React, {useState} from 'react';
 import './App.css';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import { Layout } from 'antd';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+import AppFooter from "./AppFooter";
+import NavBar from "./components/NavBar";
+import LandingContent from "./components/LandingContent";
+import CollectionInfoContent from './components/CollectionInfoContent'
+
+const { Footer } = Layout;
 
 const AppWrapper = styled(Layout)`
   background: white;
@@ -16,10 +20,18 @@ function App() {
     const [currentStep, setCurrentStep] = useState('home');
   return (
     <AppWrapper>
-      <NavBar />
-        {currentStep === 'home' && <LandingContent setCurrentStep={setCurrentStep} />}
-        {currentStep === 'collectInfo' && <CollectionInfoContent />}
-      {/* <Footer style={{ textAlign: 'center' }}>Stay Safe, Keep Space ©2020 Created by WinHacks Team 4829843</Footer> */}
+        <Row>
+            <NavBar />
+        </Row>
+        <Row>
+                {currentStep === 'home' && <LandingContent setCurrentStep={setCurrentStep} />}
+                {currentStep === 'collectInfo' && <CollectionInfoContent />}
+        </Row>
+            <Row center="xs">
+
+                    <AppFooter />
+
+            </Row>
     </AppWrapper>
   );
 }
