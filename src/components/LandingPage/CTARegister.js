@@ -61,18 +61,21 @@ function LandingContent(props) {
                 <Form.Item
                     name="firstname"
                     noStyle
+                    rules={[{ required: true, message: "First name is required" }]}
                 >
                     <StyledInput placeholder="First Name" />
                 </Form.Item>
                 <Form.Item
                     name="lastname"
                     noStyle
+                    rules={[{ required: true, message: "Last name is required" }]}
                 >
                     <StyledInput placeholder="Last Name" />
                 </Form.Item>
                 <Form.Item
                     name="email"
                     noStyle
+                    rules={[{ required: true, message: "Email is required" }]}
                 >
                     <StyledInput placeholder="Email" />
                 </Form.Item>

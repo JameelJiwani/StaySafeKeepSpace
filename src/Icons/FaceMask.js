@@ -1,8 +1,8 @@
 import React from 'react';
 
-function NeutralSmiley() {
+function FaceMask() {
     return (
-        <svg id="Capa_1" enable-background="new 0 0 512 512" height="30px" viewBox="0 0 512 512" width="30px"
+        <svg id="Capa_1" enableBackground="new 0 0 512 512" height="30px" viewBox="0 0 512 512" width="30px"
              xmlns="http://www.w3.org/2000/svg">
             <g>
                 <path
@@ -22,4 +22,4 @@ function NeutralSmiley() {
     );
 }
 
-export default NeutralSmiley;
+export default FaceMask;
