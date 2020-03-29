@@ -7,6 +7,7 @@ import Gloves from "../Icons/Gloves";
 import HandSanitizer from "../Icons/HandSanitizer";
 import Suit from "../Icons/Suit";
 
+import firebase from '../firebase';
 const { Content } = Layout;
 const { Title } = Typography;
 
@@ -144,10 +145,32 @@ function CollectionInfoContent(props) {
     console.log(options);
   }
 
-  function submitData(e) {
+  async function submitData(e) {
 
     console.log(address)
     setCurrentStep('success');
+    // pass id
+    // prepare payload => 
+    const result = await firebase.firestore()
+      .collection('donations')
+      .add({
+        ownerId: user.uid,
+        ...payload
+      })
+
+      const result1 = await firebase.firestore()
+      .doc(`users/${id}/donations`)
+      .set({
+        ...payload,
+        status: 'open'
+      },
+      {
+        merge: true
+      });
+
+    if( !result)
+      console.log("make donation failed");
+  
     // e.preventDefault();
     
   }
@@ -180,8 +203,8 @@ function CollectionInfoContent(props) {
         var tempList = items;
         tempList.push(product);
         setItems(tempList);
-        // console.log("prodcut", product);
-        // console.log('list origin', items);
+        console.log("prodcut", product);
+        console.log('list origin', items);
       
         setVisible(false);
 
