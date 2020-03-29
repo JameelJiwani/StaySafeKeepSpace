@@ -3,13 +3,13 @@ import { Layout } from "antd";
 import styled from "styled-components";
 import { Grid, Row, Col } from 'react-flexbox-grid';
 const { Footer } = Layout;
-
+//padding-top: 7%;
 const ClearFooter = styled(Footer)`
-  padding-top: 7%;
   background: #ffffff;
   position: center;
   justify-content: center;
   align-items: center;
+  margin-top: 0%;
 `;
 
 function AppFooter() {

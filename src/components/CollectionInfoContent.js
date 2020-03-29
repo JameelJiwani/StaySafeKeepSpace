@@ -6,6 +6,7 @@ import FaceMask from "../Icons/FaceMask";
 import Gloves from "../Icons/Gloves";
 import HandSanitizer from "../Icons/HandSanitizer";
 import Suit from "../Icons/Suit";
+import firebase from 'firebase'
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -17,7 +18,7 @@ const BlockContent = styled(Content)`
   flex-direction: row;
   border-radius: 5px;
   padding: 40px;
-  padding-bottom: 200px;
+  padding-bottom: 50px;
   margin: auto;
 `;
 
@@ -70,8 +71,25 @@ const FormButton = styled(Button)`
   width: 40%;
 `;
 
+var faceMaskQ = 0;
+var glovesQ = 0;
+var handSanitizerQ = 0;
+var suitsQ = 0;
+
 function CollectionInfoContent() {
   const [options, setOptions] = useState({});
+
+    function onFinish(){
+    console.log("It worked");
+    const db = firebase.firestore();
+
+    const userRef = db.collection("donations").add({
+      faceMask: faceMaskQ,
+      gloves: glovesQ,
+      handSanitizer: handSanitizerQ,
+      suits: suitsQ
+    });
+  };
 
   function onChange(e) {
     console.log(`checked = ${e.target.checked}`);
