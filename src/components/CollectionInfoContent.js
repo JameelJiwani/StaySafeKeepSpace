@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Layout, Checkbox, Button, Typography, Input, Modal } from "antd";
+import { Form, Layout, Checkbox, Button, Typography, Input, Modal, message } from "antd";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import styled from "styled-components";
 import FaceMask from "../Icons/FaceMask";
@@ -8,6 +8,8 @@ import HandSanitizer from "../Icons/HandSanitizer";
 import Suit from "../Icons/Suit";
 
 import firebase from '../firebase';
+
+import { createDonation } from '../api';
 const { Content } = Layout;
 const { Title } = Typography;
 
@@ -108,10 +110,11 @@ function CollectionInfoContent(props) {
   console.log("set current", props);
   const [options, setOptions] = useState({});
 
-  const [visible, setVisible] = useState(false);
+  const [ visible, setVisible] = useState(false);
   const [ address, setAddress] = useState('');
   const [ product , setProduct] = useState('');  
 
+  const [items, setItems] = useState([]);
     // pop
     const triggerModal = (name) => {
       setVisible(true);
@@ -146,36 +149,22 @@ function CollectionInfoContent(props) {
   }
 
   async function submitData(e) {
-
-    console.log(address)
+    e.preventDefault()
+    // console.log("addresss",props)
     setCurrentStep('success');
-    // // pass id
-    // // prepare payload => 
-    // const result = await firebase.firestore()
-    //   .collection('donations')
-    //   .add({
-    //     ownerId: user.uid,
-    //     ...payload
-    //   })
-
-    //   const result1 = await firebase.firestore()
-    //   .doc(`users/${id}/donations`)
-    //   .set({
-    //     ...payload,
-    //     status: 'open'
-    //   },
-    //   {
-    //     merge: true
-    //   });
-
-    // if( !result)
-    //   console.log("make donation failed");
-  
-    // // e.preventDefault();
-    
+    // TODO take only zip code and conver to address WE can do that
+    const payload = {
+      products: items,
+      address
+    }
+   
+    console.log('list origin will be shipped', items);
+    const result = await createDonation(payload);
+    if( !result){
+      message.error("error create donation")
+    }
   }
 
-  const [items, setItems] = useState([]);
 
   function ModalCustom (props) {
 
@@ -315,7 +304,7 @@ function CollectionInfoContent(props) {
         </Row>
         </InnerCol>
         <Row center="xs">
-          <FormButton type="primary" onClick={() => submitData()}>
+          <FormButton type="primary" onClick={(e) => submitData(e)}>
             Donate
           </FormButton>
         </Row>

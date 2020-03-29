@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Select, Tooltip, Button, Typography, message } from 'antd';
 import styled from 'styled-components';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -51,16 +51,23 @@ const FormItem = styled(Form.Item)`
 `;
 
  function LandingContent(props) {
-    const { setCurrentStep } = props;
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  
+  const { setCurrentStep } = props;
+  // const [email, setEmail] = useState("");
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
 
+  useEffect(()=>{
+    if( props.user.loggedIn)
+    {
+      setCurrentStep('collectInfo');
+    }
+  },[]);
  const onFinish = async values => {
     console.log("Received values of form: ", values);
-    setFirstName(values.firstName);
-    setEmail(values.email);
-    setLastName(values.lastName);
+    // setFirstName(values.firstName);
+    // setEmail(values.email);
+    // setLastName(values.lastName);
 
     const firstName = values.firstName;
     const lastName = values.lastName;
@@ -73,11 +80,11 @@ const FormItem = styled(Form.Item)`
         email,
         password
       );
-
+      
     if( signedUpUser){
-
+        console.log("hellloooo", signedUpUser);
       const db = await firebase.firestore()
-        .doc(`users/${signedUpUser.user.id}`)
+        .doc(`users/${signedUpUser.user.uid}`)
         .set({
           firstName,
           lastName,
@@ -87,8 +94,8 @@ const FormItem = styled(Form.Item)`
         {
           merge: true
         });
-        console.log("hello", db)
-      const userInfo = await getUser(signedUpUser.user.id);
+        console.log("hello", signedUpUser.user.uid)
+      const userInfo = await getUser(signedUpUser.user.uid);
       console.log("get user ", userInfo);
 
       props.updateUser({
@@ -96,9 +103,9 @@ const FormItem = styled(Form.Item)`
         loggedIn: true,
         loading: false,
       });
-      console.log("user from props", props);
-      // setCurrentStep('collectInfo');
-      }
+
+      setCurrentStep('collectInfo');
+     }
 
     } catch(error ){
       console.log(error);

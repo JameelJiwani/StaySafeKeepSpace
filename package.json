@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@endran/firebridge": "^1.1.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -21,7 +22,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "firebridge": "firebridge --serviceAccount serviceAccount.json",
+    "clear:auth": "yarn firebridge --commandPath 'src/databaseScripts/deleteAuth.json'",
+    "clear:users": "yarn firebridge --commandPath 'src/databaseScripts/deleteUsers.json'",
+    "clear:donations": "yarn firebridge --commandPath 'src/databaseScripts/deleteDonations.json'"
   },
   "eslintConfig": {
     "extends": "react-app"
