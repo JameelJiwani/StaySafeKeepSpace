@@ -107,7 +107,7 @@ function CollectionInfoContent(props) {
     <BlockContent>
       <BlockCol>
         <Row center="xs">
-          <Title level={5}>Submission</Title>
+          <Title level={5}>What can you spare?</Title>
         </Row>
         <Row style={{ marginBottom: "15px" }} center="xs">
           <IconButton
@@ -141,10 +141,10 @@ function CollectionInfoContent(props) {
         </Row>
         <InnerCol>
         <Row left="xs" width="60px" style={{ paddingLeft: "15px" }}>
-          <Title level={3}>Address</Title>
+          <Title level={3}>Please enter a pickup location</Title>
         </Row>
         <Row>
-          <StyledInput placeholder="Address Here" size="large" />
+          <StyledInput placeholder="Enter your locality.." size="large" />
         </Row>
         </InnerCol>
         <Row center="xs">
