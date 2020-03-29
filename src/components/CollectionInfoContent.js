@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Layout, Checkbox, Button, Typography, Input } from "antd";
+import { Form, Layout, Checkbox, Button, Typography, Input, Modal } from "antd";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import styled from "styled-components";
 import FaceMask from "../Icons/FaceMask";
@@ -72,10 +72,34 @@ const FormButton = styled(Button)`
 
 function CollectionInfoContent(props) {
   const { setCurrentStep } = props;
+  console.log("set current", props);
   const [options, setOptions] = useState({});
+
+  // modal trigger
+  const [ visible, setVisible] = useState(false);
+  const [ product , setProduct] = useState('');
+  // pop
+  const triggerModal = (name) => {
+    setVisible(true);
+    setProduct(name);
+  }
+  // onClose 
+  const closeModal = () => setVisible(false);
+  const handleOk = () => {
+
+    setVisible(false);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
+
+
 
   function toggleOptions(value) {
     let copyOptions = { ...options };
+    console.log("copty", copyOptions)
+    triggerModal(value);
     switch (value) {
       case "faceMask":
         copyOptions.faceMask = copyOptions.faceMask === true ? false : true;
@@ -153,6 +177,40 @@ function CollectionInfoContent(props) {
           </FormButton>
         </Row>
       </BlockCol>
+
+      <div>
+      <Modal
+            visible={visible}
+            title={product}
+            onOk={handleOk}
+            onCancel={handleCancel}
+            footer={[
+              <Button key="back" onClick={handleCancel}>
+                Return
+              </Button>,
+              <Button key="submit" type="primary" onClick={handleOk}>
+                Submit
+              </Button>,
+            ]}
+        >
+          <Form.Item>
+            <Title level={3}>More Information</Title>
+          </Form.Item>
+          <Form.Item
+              name="description"
+              rules={[{ required: true, message: " " }]}
+          >
+            <StyledInput placeholder="Description" />
+          </Form.Item>
+          <Form.Item
+              name="quantity"
+              rules={[{ required: true, message: " " }]}
+          >
+            <StyledInput placeholder="quantity" />
+          </Form.Item>
+
+        </Modal>
+      </div>
     </BlockContent>
   );
 }
