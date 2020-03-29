@@ -50,7 +50,8 @@ const FormItem = styled(Form.Item)`
   }
 `;
 
-function LandingContent() {
+function LandingContent(props) {
+    const { setCurrentStep } = props;
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -68,6 +69,7 @@ function LandingContent() {
       lastName: values.lastName,
       email: values.email
     });
+    setCurrentStep('collectInfo');
   };
 
   return (

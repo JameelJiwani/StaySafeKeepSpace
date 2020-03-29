@@ -12,7 +12,7 @@ const TopLogo = styled.img`
 `;
 
 const ClearHeader = styled(Header)`
-  background: #FFFFFF;
+  background: #FFFFFF00;
   display: flex;
 `;
 
