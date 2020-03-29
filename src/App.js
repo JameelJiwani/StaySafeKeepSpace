@@ -20,13 +20,15 @@ function App() {
   return (
     <AppWrapper>
         <Row>
-            <Col xsOffset={1} xs={11} /><NavBar />
+            <NavBar />
         </Row>
         <Row>
                 <LandingContent />
         </Row>
             <Row center="xs">
-                <AppFooter />
+
+                    <AppFooter />
+
             </Row>
     </AppWrapper>
   );

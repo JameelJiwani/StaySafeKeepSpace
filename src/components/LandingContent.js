@@ -21,11 +21,11 @@ function LandingContent() {
     return (
         <BlockContent>
             <Grid fluid>
-                <Row>
-                <Col>
+                <Row center="xs">
+                <Col center="xs">
                  <ValueProp />
                 </Col>
-                <Col>
+                <Col center="xs">
                  <CTARegister />
                 </Col>
                     </Row>
