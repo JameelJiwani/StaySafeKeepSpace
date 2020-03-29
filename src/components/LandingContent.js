@@ -1,9 +1,9 @@
 import React from 'react';
-import { Layout, Typography, Row, Col } from 'antd';
+import { Layout, Typography } from 'antd';
 import ValueProp from './LandingPage/ValueProp'
 import CTARegister from './LandingPage/CTARegister'
 import styled from 'styled-components';
-
+import { Grid, Row, Col } from 'react-flexbox-grid';
 const { Content } = Layout;
 
 
@@ -20,14 +20,16 @@ const BlockContent = styled(Content)`
 function LandingContent() {
     return (
         <BlockContent>
-            <Row style={{width: '100%', height: '100%'}} >
-                <Flex span={12}>
-                    <ValueProp />
-                </Flex>
-                <Flex span={12}>
-                    <CTARegister />
-                </Flex>
-            </Row>
+            <Grid fluid>
+                <Row>
+                <Col>
+                 <ValueProp />
+                </Col>
+                <Col>
+                 <CTARegister />
+                </Col>
+                    </Row>
+            </Grid>
         </BlockContent>
     );
 }

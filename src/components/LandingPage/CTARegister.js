@@ -1,7 +1,7 @@
 import React from "react";
-import { Form, Input, Select, Tooltip, Col, Button, Typography } from "antd";
+import { Form, Input, Select, Tooltip, Button, Typography } from "antd";
 import styled from "styled-components";
-
+import { Grid, Row, Col } from 'react-flexbox-grid';
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -52,6 +52,8 @@ function LandingContent() {
   };
 
   return (
+      <Row end="xs">
+        <Col xs={6} />
     <CTAContainer span={12}>
       <FlexForm name="normal_login" onFinish={onFinish}>
         <Form.Item>
@@ -85,6 +87,7 @@ function LandingContent() {
         </FormItem>
       </FlexForm>
     </CTAContainer>
+        </Row>
   );
 }
 
