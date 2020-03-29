@@ -1,7 +1,7 @@
-import React from 'react';
-import { Layout, Typography, Row, Col } from 'antd';
-import styled from 'styled-components';
-import logo from '../logo.svg';
+import React from "react";
+import { Layout, Typography, Row, Col } from "antd";
+import styled from "styled-components";
+import logo from "../logo.svg";
 
 const { Header } = Layout;
 const { Title } = Typography;
@@ -12,7 +12,7 @@ const TopLogo = styled.img`
 `;
 
 const ClearHeader = styled(Header)`
-  background: #FFFFFF;
+  background: #ffffff;
   display: flex;
 `;
 
@@ -25,12 +25,11 @@ const CompanyName = styled(Title)`
   padding-top: 25px;
 `;
 
-
 function NavBar() {
   return (
-    <ClearHeader style={{ width: '100%' }}>
-      <Row style={{width: '100%'}} >
-        <Flex >
+    <ClearHeader style={{ width: "100%" }}>
+      <Row style={{ width: "100%" }}>
+        <Flex>
           <TopLogo src={logo} alt="logo" />
         </Flex>
       </Row>

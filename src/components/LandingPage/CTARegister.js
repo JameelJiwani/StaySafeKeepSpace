@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, Select, Tooltip, Button, Typography } from "antd";
 import styled from "styled-components";
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Grid, Row, Col } from "react-flexbox-grid";
+import firebase from "firebase";
+import { DB_CONFIG } from '../../Config/config';
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -49,48 +51,63 @@ const FormItem = styled(Form.Item)`
 `;
 
 function LandingContent() {
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   const onFinish = values => {
     console.log("Received values of form: ", values);
+    setFirstName(values.firstName);
+    setEmail(values.email);
+    setLastName(values.lastName);
+
+    const db = firebase.firestore();
+
+    const userRef = db.collection("users").add({
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email
+    });
   };
 
   return (
-      <Row fluid>
-        <Col center="xs">
-    <CTAContainer span={12}>
-      <FlexForm name="normal_login" onFinish={onFinish}>
-        <Form.Item>
-          <Title level={3}>Register</Title>
-        </Form.Item>
-        <Form.Item
-          name="firstname"
-          noStyle
-          rules={[{ required: true, message: "First name is required" }]}
-        >
-          <StyledInput placeholder="First Name" />
-        </Form.Item>
-        <Form.Item
-          name="lastname"
-          noStyle
-          rules={[{ required: true, message: "Last name is required" }]}
-        >
-          <StyledInput placeholder="Last Name" />
-        </Form.Item>
-        <Form.Item
-          name="email"
-          noStyle
-          rules={[{ required: true, message: "Email is required" }]}
-        >
-          <StyledInput placeholder="Email" />
-        </Form.Item>
-        <FormItem>
-          <FormButton type="primary" htmlType="submit">
-            Register
-          </FormButton>
-        </FormItem>
-      </FlexForm>
-    </CTAContainer>
-          </Col>
-        </Row>
+    <Row fluid>
+      <Col center="xs">
+        <CTAContainer span={12}>
+          <FlexForm name="normal_login" onFinish={onFinish}>
+            <Form.Item>
+              <Title level={3}>Register</Title>
+            </Form.Item>
+            <Form.Item
+              name="firstName"
+              noStyle
+              rules={[{ required: true, message: "First name is required" }]}
+            >
+              <StyledInput placeholder="First Name" />
+            </Form.Item>
+            <Form.Item
+              name="lastName"
+              noStyle
+              rules={[{ required: true, message: "Last name is required" }]}
+            >
+              <StyledInput placeholder="Last Name" />
+            </Form.Item>
+            <Form.Item
+              name="email"
+              noStyle
+              rules={[{ required: true, message: "Email is required" }]}
+            >
+              <StyledInput placeholder="Email" />
+            </Form.Item>
+            <FormItem>
+              <FormButton type="primary" htmlType="submit">
+                Register
+              </FormButton>
+            </FormItem>
+          </FlexForm>
+        </CTAContainer>
+      </Col>
+    </Row>
   );
 }
 
