@@ -1,8 +1,4 @@
 import firebase from "firebase";
-import 'firebase/analytics';
-import 'firebase/auth';
-import 'firebase/firestore';
-
 const config = {
   apiKey: "AIzaSyDPGbQpHT575tcmjT8hcFEUlwk6b2WxSvo",
   authDomain: "staysafekeepsp.firebaseapp.com",

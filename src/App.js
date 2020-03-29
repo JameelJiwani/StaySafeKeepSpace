@@ -9,13 +9,14 @@ import NavBar from "./components/NavBar";
 import LandingContent from "./components/LandingContent";
 import CollectionInfoContent from './components/CollectionInfoContent'
 import ThankYouContent from "./components/ThankYouContent";
-
+import { subscribe } from 'react-contextual';
 const AppWrapper = styled(Layout)`
   background: white;
   height: 100%;
 `;
 
-function App() {
+function App(props) {
+  console.log("props", props)
     const [currentStep, setCurrentStep] = useState('home');
   return (
     <AppWrapper>
@@ -36,4 +37,4 @@ function App() {
   );
 }
 
-export default App;
+export default subscribe()(App);

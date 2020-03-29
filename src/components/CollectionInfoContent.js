@@ -149,29 +149,29 @@ function CollectionInfoContent(props) {
 
     console.log(address)
     setCurrentStep('success');
-    // pass id
-    // prepare payload => 
-    const result = await firebase.firestore()
-      .collection('donations')
-      .add({
-        ownerId: user.uid,
-        ...payload
-      })
+    // // pass id
+    // // prepare payload => 
+    // const result = await firebase.firestore()
+    //   .collection('donations')
+    //   .add({
+    //     ownerId: user.uid,
+    //     ...payload
+    //   })
 
-      const result1 = await firebase.firestore()
-      .doc(`users/${id}/donations`)
-      .set({
-        ...payload,
-        status: 'open'
-      },
-      {
-        merge: true
-      });
+    //   const result1 = await firebase.firestore()
+    //   .doc(`users/${id}/donations`)
+    //   .set({
+    //     ...payload,
+    //     status: 'open'
+    //   },
+    //   {
+    //     merge: true
+    //   });
 
-    if( !result)
-      console.log("make donation failed");
+    // if( !result)
+    //   console.log("make donation failed");
   
-    // e.preventDefault();
+    // // e.preventDefault();
     
   }
 

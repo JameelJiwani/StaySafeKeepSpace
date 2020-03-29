@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "antd": "^4.0.4",
     "firebase": "^7.13.1",
+    "hookrouter": "^1.2.3",
     "react": "^16.13.1",
     "react-confetti": "^5.0.1",
     "react-contextual": "^5.0.2",
