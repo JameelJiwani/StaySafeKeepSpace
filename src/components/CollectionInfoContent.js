@@ -33,6 +33,7 @@ const IconButton = styled(Button)`
   }
   && {
     border-color: #00000000;
+
   }
   &&.selected {
     border-color: blue !important;

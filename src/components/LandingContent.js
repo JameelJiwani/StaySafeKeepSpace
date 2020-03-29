@@ -17,7 +17,8 @@ const BlockContent = styled(Content)`
 `;
 
 
-function LandingContent() {
+function LandingContent(props) {
+    const { setCurrentStep } = props;
     return (
         <BlockContent>
             <Grid fluid>
@@ -26,7 +27,7 @@ function LandingContent() {
                  <ValueProp />
                 </Col>
                 <Col center="xs">
-                 <CTARegister />
+                  <CTARegister setCurrentStep={setCurrentStep} />
                 </Col>
                     </Row>
             </Grid>
