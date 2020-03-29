@@ -3,7 +3,6 @@ import { Form, Input, Select, Tooltip, Button, Typography } from 'antd';
 import styled from 'styled-components';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import firebase from 'firebase';
-import { DB_CONFIG } from '../../Config/config';
 
 const { Option } = Select;
 const { Title } = Typography;
