@@ -14,6 +14,7 @@ const TopLogo = styled.img`
 const ClearHeader = styled(Header)`
   background: #FFFFFF;
   display: flex;
+  margin-bottom: 20px;
 `;
 
 const Flex = styled(Col)`
