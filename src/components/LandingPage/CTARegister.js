@@ -3,7 +3,6 @@ import { Form, Input, Select, Tooltip, Button, Typography } from 'antd';
 import styled from 'styled-components';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import firebase from 'firebase';
-import { DB_CONFIG } from '../../Config/config';
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -29,7 +28,6 @@ const FlexForm = styled(Form)`
 const StyledInput = styled(Input)`
   border-radius: 5px;
   width: 500px;
-  margin: 10px;
   padding: 5px;
 `;
 
@@ -82,22 +80,19 @@ function LandingContent(props) {
             </Form.Item>
             <Form.Item
               name="firstName"
-              noStyle
-              rules={[{ required: true, message: "First name is required" }]}
+              rules={[{ required: true, message: " " }]}
             >
               <StyledInput placeholder="First Name" />
             </Form.Item>
             <Form.Item
               name="lastName"
-              noStyle
-              rules={[{ required: true, message: "Last name is required" }]}
+              rules={[{ required: true, message: " " }]}
             >
               <StyledInput placeholder="Last Name" />
             </Form.Item>
             <Form.Item
               name="email"
-              noStyle
-              rules={[{ required: true, message: "Email is required" }]}
+              rules={[{ required: true, message: " " }]}
             >
               <StyledInput placeholder="Email" />
             </Form.Item>
