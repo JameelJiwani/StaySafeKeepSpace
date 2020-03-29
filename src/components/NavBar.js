@@ -29,12 +29,13 @@ const CompanyName = styled(Title)`
 `;
 
 function NavBar(props) {
-
+  const { setCurrentStep } = props;
   const signOut = async () => {
     await firebase.auth().signOut();
     props.updateUser({
       loggedIn: false
     });
+    setCurrentStep('home');
   }
   return (
     <ClearHeader style={{ width: '100%' }}>

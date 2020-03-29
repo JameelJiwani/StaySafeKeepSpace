@@ -21,7 +21,7 @@ function App(props) {
   return (
     <AppWrapper>
         <Row>
-            <NavBar />
+            <NavBar setCurrentStep={setCurrentStep}/>
         </Row>
         <Row>
                 {currentStep === 'home' && <LandingContent setCurrentStep={setCurrentStep} />}
@@ -29,9 +29,7 @@ function App(props) {
                 {currentStep === 'success' && <ThankYouContent />}
         </Row>
             <Row center="xs">
-
-                    <AppFooter />
-
+                <AppFooter />
             </Row>
     </AppWrapper>
   );
