@@ -71,10 +71,10 @@ const FormButton = styled(Button)`
   width: 40%;
 `;
 
-function CollectionInfoContent() {
+function CollectionInfoContent(props) {
+  const { setCurrentStep } = props;
   const [options, setOptions] = useState({});
   const [ visible, setVisible] = useState(false);
-
   const showModal = (value) => {
     setVisible(true);
   };
@@ -87,7 +87,6 @@ function CollectionInfoContent() {
   const handleCancel = () => {
     setVisible(false);
   };
-
   function toggleOptions(value) {
     let copyOptions = { ...options };
     showModal(value);
@@ -116,6 +115,10 @@ function CollectionInfoContent() {
       default:
     }
     console.log(options);
+  }
+
+  function submitData() {
+    setCurrentStep('success');
   }
 
   return (
@@ -194,7 +197,7 @@ function CollectionInfoContent() {
         </Row>
         </InnerCol>
         <Row center="xs">
-          <FormButton type="primary" htmlType="submit">
+          <FormButton type="primary" onClick={() => submitData()}>
             Donate
           </FormButton>
         </Row>
