@@ -13,6 +13,7 @@ const CTAContainer = styled(Col)`
   justify-content: center;
   width: 100%;
   padding: 20px;
+  
   align-items: center;
 `;
 
