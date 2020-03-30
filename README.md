@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## To View Online
-Follow this linik [staysafekeep.space]
+Follow this link: [staysafekeep.space](staysafekeep.space)
 
 ## Available Scripts
 
