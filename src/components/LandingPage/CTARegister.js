@@ -77,7 +77,7 @@ function LandingContent(props) {
         <CTAContainer span={12}>
           <FlexForm name="normal_login" onFinish={onFinish}>
             <Form.Item>
-              <Title level={3}>Register</Title>
+              <Title level={3}>Arrange a pickup today</Title>
             </Form.Item>
             <Form.Item
               name="firstName"

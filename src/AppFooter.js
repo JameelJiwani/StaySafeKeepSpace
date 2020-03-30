@@ -5,10 +5,10 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 const { Footer } = Layout;
 
 const ClearFooter = styled(Footer)`
-  padding-top: 7%;
   background: #ffffff;
   position: center;
   justify-content: center;
+  margin: auto;
   align-items: center;
 `;
 
