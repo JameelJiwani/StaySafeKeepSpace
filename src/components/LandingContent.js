@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useEffect, useSate} from 'react';
 import { Layout, Typography } from 'antd';
 import ValueProp from './LandingPage/ValueProp'
 import CTARegister from './LandingPage/CTARegister'
 import styled from 'styled-components';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import firebase from '../firebase'
+import { subscribe } from 'react-contextual';
 const { Content } = Layout;
 
 
@@ -18,7 +20,43 @@ const BlockContent = styled(Content)`
 
 
 function LandingContent(props) {
-    const { setCurrentStep } = props;
+
+  // useEffect(()=>{
+  //   if( props.user.loggedIn)
+  //   {
+  //     console.log("props",props)
+  //     setCurrentStep('collectInfo');
+  //   }
+  // },[props.user.loggedIn]);
+
+  const { setCurrentStep } = props;
+
+  useEffect(() => {
+    try {
+
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          props.updateUser({
+            loggedIn: true
+          });
+          setCurrentStep('collectInfo');
+       
+        } else {
+          props.updateUser({
+            loggedIn: false
+          });
+        }
+      });
+
+    } catch (err) {
+      props.updateUser({
+        loggedIn: false
+      });
+      // console.log(err);
+    }
+
+  }, []);
+
     return (
         <BlockContent>
             <Grid fluid>
@@ -35,4 +73,4 @@ function LandingContent(props) {
     );
 }
 
-export default LandingContent;
+export default subscribe()(LandingContent);

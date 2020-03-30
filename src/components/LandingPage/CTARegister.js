@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Form, Input, Select, Tooltip, Button, Typography } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Form, Input, Select, Tooltip, Button, Typography, message } from 'antd';
 import styled from 'styled-components';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import firebase from 'firebase';
-
+import firebase from '../../firebase';
+import {subscribe} from 'react-contextual';
+import { getUser } from '../../api';
 const { Option } = Select;
 const { Title } = Typography;
 
@@ -49,30 +50,81 @@ const FormItem = styled(Form.Item)`
   }
 `;
 
-function LandingContent(props) {
-    const { setCurrentStep } = props;
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+ function LandingContent(props) {
+  
+  const { setCurrentStep } = props;
+  // const [email, setEmail] = useState("");
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
 
-  const onFinish = values => {
+  useEffect(()=>{
+    if( props.user.loggedIn)
+    {
+      setCurrentStep('collectInfo');
+    }
+  },[]);
+ const onFinish = async values => {
     console.log("Received values of form: ", values);
-    setFirstName(values.firstName);
-    setEmail(values.email);
-    setLastName(values.lastName);
+    // setFirstName(values.firstName);
+    // setEmail(values.email);
+    // setLastName(values.lastName);
 
-    const db = firebase.firestore();
+    const firstName = values.firstName;
+    const lastName = values.lastName;
+    const email = values.email;
+    const password = values.password;
+    
+    try {
+      const signedUpUser = await firebase.auth()
+      .createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      
+    if( signedUpUser){
+        console.log("hellloooo", signedUpUser);
+      const db = await firebase.firestore()
+        .doc(`users/${signedUpUser.user.uid}`)
+        .set({
+          firstName,
+          lastName,
+          email,
+          type: 'donor'
+        },
+        {
+          merge: true
+        });
+        console.log("hello", signedUpUser.user.uid)
+      const userInfo = await getUser(signedUpUser.user.uid);
+      console.log("get user ", userInfo);
 
-    const userRef = db.collection("users").add({
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email
-    });
-    setCurrentStep('collectInfo');
+      props.updateUser({
+        ...userInfo, 
+        loggedIn: true,
+        loading: false,
+      });
+
+      setCurrentStep('collectInfo');
+     }
+
+    } catch(error ){
+      console.log(error);
+      message.error(error.message);
+    }   
+
+    // bilal code //
+    // const db = firebase.firestore();
+
+    // const userRef = db.collection("users").add({
+    //   firstName: values.firstName,
+    //   lastName: values.lastName,
+    //   email: values.email
+    // });
+
   };
 
   return (
-    <Row fluid>
+    <Row fluid="true">
       <Col center="xs">
         <CTAContainer span={12}>
           <FlexForm name="normal_login" onFinish={onFinish}>
@@ -97,6 +149,12 @@ function LandingContent(props) {
             >
               <StyledInput placeholder="Email" />
             </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[{ required: true, message: " " }]}
+            >
+              <StyledInput placeholder="Password" />
+            </Form.Item>
             <FormItem>
               <FormButton type="primary" htmlType="submit">
                 Register
@@ -109,4 +167,4 @@ function LandingContent(props) {
   );
 }
 
-export default LandingContent;
+export default subscribe()(LandingContent);
