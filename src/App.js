@@ -13,6 +13,7 @@ import ThankYouContent from "./components/ThankYouContent";
 const AppWrapper = styled(Layout)`
   background: white;
   height: 100%;
+  width:99%;
 `;
 
 function App() {

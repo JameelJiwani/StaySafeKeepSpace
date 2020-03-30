@@ -17,7 +17,7 @@ const BlockContent = styled(Content)`
   flex-direction: row;
   border-radius: 5px;
   padding: 40px;
-  padding-bottom: 200px;
+  padding-bottom: 20px;
   margin: auto;
 `;
 
@@ -98,23 +98,23 @@ function CollectionInfoContent(props) {
 
   function toggleOptions(value) {
     let copyOptions = { ...options };
-    console.log("copty", copyOptions)
+    console.log("copy", copyOptions)
     triggerModal(value);
     switch (value) {
-      case "faceMask":
+      case "Face Masks":
         copyOptions.faceMask = copyOptions.faceMask === true ? false : true;
         setOptions(copyOptions);
         break;
-      case "gloves":
+      case "Goggles and Gloves":
         copyOptions.gloves = copyOptions.gloves === true ? false : true;
         setOptions(copyOptions);
         break;
-      case "handSanitizer":
+      case "Hand Sanitizers":
         copyOptions.handSanitizer =
           copyOptions.handSanitizer === true ? false : true;
         setOptions(copyOptions);
         break;
-      case "suit":
+      case "Full Body Suits":
         copyOptions.suit = copyOptions.suit === true ? false : true;
         setOptions(copyOptions);
         break;
@@ -136,28 +136,28 @@ function CollectionInfoContent(props) {
         <Row style={{ marginBottom: "15px" }} center="xs">
           <IconButton
             className={options.faceMask ? "selected" : ""}
-            onClick={() => toggleOptions("faceMask")}
+            onClick={() => toggleOptions("Face Masks")}
           >
             <FaceMask />
             <label style={{ marginTop: "3px" }}>Face Mask</label>
           </IconButton>
           <IconButton
             className={options.gloves ? "selected" : ""}
-            onClick={() => toggleOptions("gloves")}
+            onClick={() => toggleOptions("Goggles and Gloves")}
           >
             <Gloves />
             <label style={{ marginTop: "3px" }}>Goggles & Gloves</label>
           </IconButton>
           <IconButton
             className={options.handSanitizer ? "selected" : ""}
-            onClick={() => toggleOptions("handSanitizer")}
+            onClick={() => toggleOptions("Hand Sanitizers")}
           >
             <HandSanitizer />
             <label style={{ marginTop: "3px" }}>Sanitization Products</label>
           </IconButton>
           <IconButton
             className={options.suit ? "selected" : ""}
-            onClick={() => toggleOptions("suit")}
+            onClick={() => toggleOptions("Full Body Suits")}
           >
             <Suit />
             <label style={{ marginTop: "3px" }}>Full body suits</label>
