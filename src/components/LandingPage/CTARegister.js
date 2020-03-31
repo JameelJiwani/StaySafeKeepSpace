@@ -60,7 +60,6 @@ const FormItem = styled(Form.Item)`
     }
   },[]);
  const onFinish = async values => {
-    console.log("Received values of form: ", values);
 
     const firstName = values.firstName;
     const lastName = values.lastName;
@@ -75,7 +74,7 @@ const FormItem = styled(Form.Item)`
       );
       
     if( signedUpUser){
-        console.log("hellloooo", signedUpUser);
+
       const db = await firebase.firestore()
         .doc(`users/${signedUpUser.user.uid}`)
         .set({
@@ -83,13 +82,13 @@ const FormItem = styled(Form.Item)`
           lastName,
           email,
           type: 'donor'
+
         },
         {
           merge: true
         });
-        console.log("hello", signedUpUser.user.uid)
+        
       const userInfo = await getUser(signedUpUser.user.uid);
-      console.log("get user ", userInfo);
 
       props.updateUser({
         ...userInfo, 
@@ -101,7 +100,8 @@ const FormItem = styled(Form.Item)`
      }
 
     } catch(error ){
-      console.log(error);
+      console.debug(error);
+      // modal pop up 
       message.error(error.message);
     }   
 
@@ -137,7 +137,7 @@ const FormItem = styled(Form.Item)`
               name="password"
               rules={[{ required: true, message: " " }]}
             >
-              <Input.password />
+              <Input.Password />
             </Form.Item>
             <FormItem>
               <FormButton type="primary" htmlType="submit">

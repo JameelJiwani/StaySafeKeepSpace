@@ -106,7 +106,6 @@ const FlexForm = styled(Form)`
 
 function CollectionInfoContent(props) {
   const { setCurrentStep } = props;
-  console.log("set current", props);
   const [options, setOptions] = useState({});
 
   const [ visible, setVisible] = useState(false);
@@ -122,7 +121,6 @@ function CollectionInfoContent(props) {
 
   function toggleOptions(value) {
     let copyOptions = { ...options };
-    console.log("copy", copyOptions)
     triggerModal(value);
     switch (value) {
       case "Face Masks":
@@ -144,23 +142,20 @@ function CollectionInfoContent(props) {
         break;
       default:
     }
-    console.log(options);
   }
 
   async function submitData(e) {
-    e.preventDefault()
-    // console.log("addresss",props)
+    e.preventDefault();
     setCurrentStep('success');
-    // TODO take only zip code and conver to address WE can do that
+    // TODO: take only zip code and conver to address WE can do that
     const payload = {
       products: items,
       address
     }
    
-    console.log('list origin will be shipped', items);
     const result = await createDonation(payload);
     if( !result){
-      message.error("error create donation")
+      message.error("error create donation");
     }
   }
 
