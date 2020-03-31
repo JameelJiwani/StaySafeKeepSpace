@@ -6,7 +6,6 @@ import FaceMask from "../Icons/FaceMask";
 import Gloves from "../Icons/Gloves";
 import HandSanitizer from "../Icons/HandSanitizer";
 import Suit from "../Icons/Suit";
-
 import firebase from '../firebase';
 
 import { createDonation } from '../api';
@@ -20,7 +19,7 @@ const BlockContent = styled(Content)`
   flex-direction: row;
   border-radius: 5px;
   padding: 40px;
-  padding-bottom: 200px;
+  padding-bottom: 20px;
   margin: auto;
 `;
 
@@ -126,20 +125,20 @@ function CollectionInfoContent(props) {
     console.log("copty", copyOptions)
     triggerModal(value);
     switch (value) {
-      case "faceMask":
+      case "Face Masks":
         copyOptions.faceMask = copyOptions.faceMask === true ? false : true;
         setOptions(copyOptions);
         break;
-      case "gloves":
+      case "Googles & Gloves":
         copyOptions.gloves = copyOptions.gloves === true ? false : true;
         setOptions(copyOptions);
         break;
-      case "handSanitizer":
+      case "Hand Sanitizers":
         copyOptions.handSanitizer =
           copyOptions.handSanitizer === true ? false : true;
         setOptions(copyOptions);
         break;
-      case "suit":
+      case "Full Body Suits":
         copyOptions.suit = copyOptions.suit === true ? false : true;
         setOptions(copyOptions);
         break;
@@ -165,13 +164,7 @@ function CollectionInfoContent(props) {
     }
   }
 
-
   function ModalCustom (props) {
-
-
-    // const [ name, setName] = useState(null);
-    // const [ amount, setAmount] = useState(null);
-    // const [ description, setDescription] = useState(null);
   
     
       // onClose 
@@ -202,16 +195,6 @@ function CollectionInfoContent(props) {
       const onFinish = values => {
 
         console.log("onfinsh values of the product", values);
-        // setAmount(values.amount);
-        // setName(props.name);
-        // setDescription(values.description);
-
-
-        // console.log("onfinsh values of the product", values.amount);
-
-        // console.log("onfinsh values of the product", props.name);
-
-        // console.log("onfinsh values of the product", values.description);
         addProductToList(props.name, values.amount, values.description);
       }
     return (
@@ -260,45 +243,45 @@ function CollectionInfoContent(props) {
     <BlockContent>
       <BlockCol>
         <Row center="xs">
-          <Title level={5}>Submission</Title>
+          <Title level={5}>What can you donate?</Title>
         </Row>
         <Row style={{ marginBottom: "15px" }} center="xs">
           <IconButton
             className={options.faceMask ? "selected" : ""}
-            onClick={() => toggleOptions("faceMask")}
+            onClick={() => toggleOptions("Face Masks")}
           >
             <FaceMask />
             <label style={{ marginTop: "3px" }}>Face Mask</label>
           </IconButton>
           <IconButton
             className={options.gloves ? "selected" : ""}
-            onClick={() => toggleOptions("gloves")}
+            onClick={() => toggleOptions("Goggles & Gloves")}
           >
             <Gloves />
             <label style={{ marginTop: "3px" }}>Goggles & Gloves</label>
           </IconButton>
           <IconButton
             className={options.handSanitizer ? "selected" : ""}
-            onClick={() => toggleOptions("handSanitizer")}
+            onClick={() => toggleOptions("Hand Sanitizers")}
           >
             <HandSanitizer />
             <label style={{ marginTop: "3px" }}>Sanitization Products</label>
           </IconButton>
           <IconButton
             className={options.suit ? "selected" : ""}
-            onClick={() => toggleOptions("suit")}
+            onClick={() => toggleOptions("Full Body Suits")}
           >
             <Suit />
-            <label style={{ marginTop: "3px" }}>Full body suits</label>
+            <label style={{ marginTop: "3px" }}>Full Body Suits</label>
           </IconButton>
         </Row>
         <InnerCol>
         <Row left="xs" width="60px" style={{ paddingLeft: "15px" }}>
-          <Title level={3}>Address</Title>
+          <Title level={3}>Please enter your drop off address</Title>
         </Row>
         <Row>
          
-          <StyledInput placeholder="Address Here" size="large"  onChange={e => setAddress(e.target.value)}/>
+          <StyledInput placeholder=" Enter your drop off address" size="large"  onChange={e => setAddress(e.target.value)}/>
       
         
         </Row>

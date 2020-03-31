@@ -21,13 +21,6 @@ const BlockContent = styled(Content)`
 
 function LandingContent(props) {
 
-  // useEffect(()=>{
-  //   if( props.user.loggedIn)
-  //   {
-  //     console.log("props",props)
-  //     setCurrentStep('collectInfo');
-  //   }
-  // },[props.user.loggedIn]);
 
   const { setCurrentStep } = props;
 

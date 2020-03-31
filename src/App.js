@@ -10,9 +10,11 @@ import LandingContent from "./components/LandingContent";
 import CollectionInfoContent from './components/CollectionInfoContent'
 import ThankYouContent from "./components/ThankYouContent";
 import { subscribe } from 'react-contextual';
+
 const AppWrapper = styled(Layout)`
   background: white;
   height: 100%;
+  width: 99%;
 `;
 
 function App(props) {

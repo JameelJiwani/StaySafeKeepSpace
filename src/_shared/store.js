@@ -1,6 +1,3 @@
-
-
-
 import * as productAction from '../components/actions';
 
 
