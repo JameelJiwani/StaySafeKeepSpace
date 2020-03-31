@@ -7,6 +7,7 @@ import { ReactComponent as Gloves } from "../Icons/Gloves.svg";
 import { ReactComponent as Suit } from "../Icons/Suit.svg";
 import { ReactComponent as HandSanitizer} from '../Icons/disinfectant.svg';
 
+import ModalCustom from './ModalCustom';
 import { subscribe } from 'react-contextual';
 import { createDonation } from '../api';
 const { Content } = Layout;
@@ -93,72 +94,6 @@ const FlexForm = styled(Form)`
   margin: auto;
 `;
 
-const ModalCustom = subscribe()((props) => {
-  
-  const { isVisible } = props.modal;
-
-  // find the selected product
-  var selected = [];
-  if(props.items)
-    selected = props.items.filter( e => e.name === props.name);
-
-  // store the values
-  const amount = selected.length === 0 ? "" : selected[0].amount;
-  const description = selected.length === 0 ? "" : selected[0].description;
-
-  const addProductToList = (name, amount, description) => {
-    var product = {
-      name,
-      description,
-      amount,
-    };
-    props.pushProduct(props.name,product)
-    props.updateModalIsVisible(isVisible);
-  };
-
-  const onFinish = values => {
-    addProductToList(props.name, values.amount, values.description);
-  };
-
-return (
-  <Modal
-      destroyOnClose={true}
-      closable={true}
-      visible={isVisible}
-      title={props.name}
-      onCancel={()=> props.updateModalIsVisible(isVisible)}
-      footer={[
-        <Button key="back" onClick={() => props.updateModalIsVisible(isVisible)}>
-          Return
-        </Button>
-      ]}
-  >
-  <FlexForm onFinish={onFinish}>
-    <Form.Item>
-      <Title level={3}>More Information</Title>
-    </Form.Item>
-    
-    <Form.Item
-      name="description"
-      rules={[{ required: true, message: " " }]}
-    >
-      <StyledInput placeholder={!description? "Description" :description}/>
-    </Form.Item>
-    <Form.Item
-      name="amount"
-      rules={[{ required: true, message: " " }]}
-    >
-      <StyledInput placeholder={!amount? "Duantity" :amount} />
-    </Form.Item>
-    <FormItem>
-      <FormButton type="primary" htmlType="submit">
-        Add
-      </FormButton>
-    </FormItem>
-    </FlexForm>
-  </Modal>
-);
-});
 
 function CollectionInfoContent(props) {
 
