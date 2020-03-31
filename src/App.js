@@ -18,7 +18,6 @@ const AppWrapper = styled(Layout)`
 `;
 
 function App(props) {
-  console.log("props", props)
     const [currentStep, setCurrentStep] = useState('home');
   return (
     <AppWrapper>
