@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout } from "antd";
 import styled from "styled-components";
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Col } from 'react-flexbox-grid';
 const { Footer } = Layout;
 
 const ClearFooter = styled(Footer)`

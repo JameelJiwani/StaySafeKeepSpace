@@ -25,4 +25,7 @@ yarn-error.log*
 
 # config hide
 config.js
+
+#firebase access
+serviceAccount.json
 firebase.js
