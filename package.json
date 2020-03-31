@@ -24,9 +24,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "firebridge": "firebridge --serviceAccount serviceAccount.json",
-    "clear:auth": "npm firebridge --commandPath 'src/databaseScripts/deleteAuth.json'",
-    "clear:users": "npm firebridge --commandPath 'src/databaseScripts/deleteUsers.json'",
-    "clear:donations": "npm firebridge --commandPath 'src/databaseScripts/deleteDonations.json'"
+    "clear:auth": "yarn firebridge --commandPath src/databaseScripts/deleteAuth.json",
+    "clear:users": "yarn firebridge --commandPath src/databaseScripts/deleteUsers.json",
+    "clear:donations": "yarn firebridge --commandPath src/databaseScripts/deleteDonations.json"
   },
   "eslintConfig": {
     "extends": "react-app"

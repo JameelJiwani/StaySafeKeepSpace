@@ -45,7 +45,6 @@ function LandingContent(props) {
       props.updateUser({
         loggedIn: false
       });
-      // console.log(err);
     }
 
   }, []);

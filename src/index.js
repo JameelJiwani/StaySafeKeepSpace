@@ -9,7 +9,7 @@ import store from './_shared/store';
 
 ReactDOM.render(
   <Provider {...store}>
-    <App></App>
+    <App />
   </Provider>,
   document.getElementById('root')
 );

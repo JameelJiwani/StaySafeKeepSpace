@@ -1,4 +1,4 @@
 {
   "action": "AUTH.DELETE",
-  "remove": ".*"
+  "remove": ".*test"
 }

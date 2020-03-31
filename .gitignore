@@ -28,5 +28,3 @@ config.js
 
 #firebase accessc
 serviceAccount.json
-.serviceAccount.json
-./serviceAccount.json

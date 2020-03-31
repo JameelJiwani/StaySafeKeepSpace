@@ -52,9 +52,6 @@ const FormItem = styled(Form.Item)`
  function LandingContent(props) {
   
   const { setCurrentStep } = props;
-  // const [email, setEmail] = useState("");
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
 
   useEffect(()=>{
     if( props.user.loggedIn)
@@ -64,9 +61,6 @@ const FormItem = styled(Form.Item)`
   },[]);
  const onFinish = async values => {
     console.log("Received values of form: ", values);
-    // setFirstName(values.firstName);
-    // setEmail(values.email);
-    // setLastName(values.lastName);
 
     const firstName = values.firstName;
     const lastName = values.lastName;
@@ -111,15 +105,6 @@ const FormItem = styled(Form.Item)`
       message.error(error.message);
     }   
 
-    // bilal code //
-    // const db = firebase.firestore();
-
-    // const userRef = db.collection("users").add({
-    //   firstName: values.firstName,
-    //   lastName: values.lastName,
-    //   email: values.email
-    // });
-
   };
 
   return (
@@ -152,7 +137,7 @@ const FormItem = styled(Form.Item)`
               name="password"
               rules={[{ required: true, message: " " }]}
             >
-              <StyledInput placeholder="Password" />
+              <Input.password />
             </Form.Item>
             <FormItem>
               <FormButton type="primary" htmlType="submit">
