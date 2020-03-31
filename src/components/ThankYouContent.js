@@ -7,7 +7,6 @@ import { Col } from 'react-flexbox-grid';
 
 const { Title } = Typography;
 
-
 const FlexContainer = styled(Col)`
   display: flex;
   justify-content: center;
@@ -25,54 +24,48 @@ const CenteredIcon = styled.div`
   align-items: center;
 `;
 
-
 function useWindowSize() {
-    const isClient = typeof window === 'object';
 
-    function getSize() {
-        return {
-            width: isClient ? window.innerWidth : undefined,
-            height: isClient ? window.innerHeight : undefined
-        };
+  const isClient = typeof window === 'object';
+  
+  const getSize = {
+    width: isClient ? window.innerWidth : undefined,
+    height: isClient ? window.innerHeight : undefined
+  };
+  const [windowSize, setWindowSize] = useState(getSize);
+
+  useEffect(() => {
+    if (!isClient) {
+      return false;
     }
+  
+    const handleResize = () => setWindowSize(getSize);
+    window.addEventListener('resize', handleResize);
 
-    const [windowSize, setWindowSize] = useState(getSize);
+    return () => window.removeEventListener('resize', handleResize);
+  
+  },[getSize, isClient]); // Empty array ensures that effect is only run on mount and unmount
 
-    useEffect(() => {
-        if (!isClient) {
-            return false;
-        }
-
-        function handleResize() {
-            setWindowSize(getSize());
-        }
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []); // Empty array ensures that effect is only run on mount and unmount
-
-    return windowSize;
+  return windowSize;
 }
 
 function ThankYouContent() {
-    const { width, height } = useWindowSize();
-    return (
-        <>
-            <Confetti
-                width={width}
-                height={height}
-            />
-                <FlexContainer>
-                    <ValuePropTitle>Thank you for your donation!</ValuePropTitle>
-                    <Title level={3}>Keep an eye out for an email from us to schedule a pickup</Title>
-                </FlexContainer>
-            <CenteredIcon>
-                <Checkmark />
-            </CenteredIcon>
-
-
-        </>
-    );
+  const { width, height } = useWindowSize();
+  return (
+    <>
+      <Confetti
+        width={width}
+        height={height}
+      />
+      <FlexContainer>
+        <ValuePropTitle>Thank you for your donation!</ValuePropTitle>
+        <Title level={3}>Keep an eye out for an email from us to schedule a pickup</Title>
+      </FlexContainer>
+      <CenteredIcon>
+        <Checkmark />
+      </CenteredIcon>
+    </>
+  );
 }
 
 export default ThankYouContent;

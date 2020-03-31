@@ -50,12 +50,13 @@ const FormItem = styled(Form.Item)`
 
 function LandingContent(props) {
   const { setCurrentStep } = props;
-
+  const { loggedIn } = props.user;
   useEffect(() => {
-    if (props.user.loggedIn) {
+    if (loggedIn) {
       setCurrentStep("collectInfo");
     }
-  }, []);
+  }, [loggedIn,setCurrentStep]);
+
   const onFinish = async values => {
     const firstName = values.firstName;
     const lastName = values.lastName;
@@ -78,9 +79,7 @@ function LandingContent(props) {
               email,
               type: "donor"
             },
-            {
-              merge: true
-            }
+            { merge: true }
           );
 
         const userInfo = await getUser(signedUpUser.user.uid);

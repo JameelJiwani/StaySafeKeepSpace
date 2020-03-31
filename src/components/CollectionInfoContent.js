@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Form, Layout, Button, Typography, Input, Modal, message } from "antd";
 import { Row, Col } from "react-flexbox-grid";
 import styled from "styled-components";
-import FaceMask from "../Icons/FaceMask";
-import Gloves from "../Icons/Gloves";
-import HandSanitizer from "../Icons/HandSanitizer";
-import Suit from "../Icons/Suit";
+import { ReactComponent as FaceMask } from "../Icons/FaceMask.svg";
+import { ReactComponent as Gloves } from "../Icons/Gloves.svg";
+import { ReactComponent as Suit } from "../Icons/Suit.svg";
+import { ReactComponent as HandSanitizer} from '../Icons/disinfectant.svg';
 
+import ModalCustom from './ModalCustom';
+import { subscribe } from 'react-contextual';
 import { createDonation } from '../api';
 const { Content } = Layout;
 const { Title } = Typography;
@@ -92,20 +94,19 @@ const FlexForm = styled(Form)`
   margin: auto;
 `;
 
+
 function CollectionInfoContent(props) {
+
   const { setCurrentStep } = props;
   const [options, setOptions] = useState({});
 
-  const [ visible, setVisible] = useState(false);
   const [ address, setAddress] = useState('');
   const [ product , setProduct] = useState('');  
 
-  const [items, setItems] = useState([]);
-    // pop
-    const triggerModal = (name) => {
-      setVisible(true);
-      setProduct(name);
-    }
+  const triggerModal = (name) => {
+    props.updateModalIsVisible(false);
+    setProduct(name);
+  }
 
   function toggleOptions(value) {
     let copyOptions = { ...options };
@@ -133,89 +134,22 @@ function CollectionInfoContent(props) {
   }
 
   async function submitData(e) {
+
     e.preventDefault();
     setCurrentStep('success');
     // TODO: take only zip code and conver to address WE can do that
     const payload = {
-      products: items,
+      products: props.items,
       address
-    }
-   
+    };
+  
     const result = await createDonation(payload);
     if( !result){
       message.error("error create donation");
     }
-  }
+};
 
-  function ModalCustom (props) {
-    
-      const handleCancel = () => {
-        setVisible(false);
-      };
-    
-      const addProductToList = (name, amount, description) => {
-        var product = {
-          name,
-          description,
-          amount,
-        };
-        var tempList = items;
-        tempList.push(product);
-        setItems(tempList);
-        console.log("prodcut", product);
-        console.log('list origin', items);
-      
-        setVisible(false);
-
-
-      }
-      const onFinish = values => {
-
-        console.log("onfinsh values of the product", values);
-        addProductToList(props.name, values.amount, values.description);
-      }
-    return (
-      <Modal
-          closable={true}
-          footer={null}
-          visible={props.visible}
-          title={props.name}
-          onCancel={handleCancel}
-          footer={[
-            <Button key="back" onClick={handleCancel}>
-              Return
-            </Button>
-          ]}
-      >
-      <FlexForm onFinish={onFinish}>
-        <Form.Item>
-          <Title level={3}>More Information</Title>
-        </Form.Item>
-        
-        <Form.Item
-            name="description"
-            rules={[{ required: true, message: " " }]}
-                
-        >
-    
-          <StyledInput placeholder="Description" />
-        </Form.Item>
-        <Form.Item
-            name="amount"
-            rules={[{ required: true, message: " " }]}
-        >
-          <StyledInput placeholder="quantity" />
-        </Form.Item>
-        <FormItem>
-              <FormButton type="primary" htmlType="submit">
-              Add
-              </FormButton>
-        </FormItem>
-        </FlexForm>
-      </Modal>
-      )
-  };
-
+ 
   return (
     <BlockContent>
       <BlockCol>
@@ -227,7 +161,7 @@ function CollectionInfoContent(props) {
             className={options.faceMask ? "selected" : ""}
             onClick={() => toggleOptions("Face Masks")}
           >
-            <FaceMask />
+          <FaceMask />
             <label style={{ marginTop: "3px" }}>Face Mask</label>
           </IconButton>
           <IconButton
@@ -269,10 +203,10 @@ function CollectionInfoContent(props) {
       </BlockCol>
 
       <div>
-      <ModalCustom visible={visible} name={product}/>
+      <ModalCustom name={product}/>
       </div>
     </BlockContent>
   );
 }
 
-export default CollectionInfoContent;
+export default subscribe()(CollectionInfoContent);

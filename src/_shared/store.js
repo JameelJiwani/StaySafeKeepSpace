@@ -19,6 +19,13 @@ export default {
     description: ''
   },
 
+  modal:{
+    isVisible: false,
+    isSame: false,
+  },
+
+  items:[],
+
   donation: {
     products: [],
     ownerIn: '',

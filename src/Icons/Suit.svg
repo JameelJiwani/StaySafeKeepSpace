@@ -1,7 +1,4 @@
-import React from 'react';
 
-function Suit() {
-    return (
         <svg id="Capa_1" enable-background="new 0 0 512.002 512.002" height="30px" viewBox="0 0 512.002 512.002"
              width="30px" xmlns="http://www.w3.org/2000/svg">
             <g>
@@ -46,7 +43,3 @@ function Suit() {
                 </g>
             </g>
         </svg>
-    );
-}
-
-export default Suit;
