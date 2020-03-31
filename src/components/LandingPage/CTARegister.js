@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Input, Select, Tooltip, Button, Typography, message } from 'antd';
+import React, { useEffect } from 'react';
+import { Form, Input, Button, Typography, message } from 'antd';
 import styled from 'styled-components';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 import firebase from '../../firebase';
 import {subscribe} from 'react-contextual';
 import { getUser } from '../../api';
-const { Option } = Select;
 const { Title } = Typography;
 
 const CTAContainer = styled(Col)`
@@ -82,7 +81,7 @@ const FormItem = styled(Form.Item)`
       
     if( signedUpUser){
         console.log("hellloooo", signedUpUser);
-      const db = await firebase.firestore()
+      await firebase.firestore()
         .doc(`users/${signedUpUser.user.uid}`)
         .set({
           firstName,

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Form, Layout, Checkbox, Button, Typography, Input, Modal, message } from "antd";
-import { Grid, Row, Col } from "react-flexbox-grid";
+import { Form, Layout, Button, Typography, Input, Modal, message } from "antd";
+import { Row, Col } from "react-flexbox-grid";
 import styled from "styled-components";
 import FaceMask from "../Icons/FaceMask";
 import Gloves from "../Icons/Gloves";
 import HandSanitizer from "../Icons/HandSanitizer";
 import Suit from "../Icons/Suit";
-import firebase from '../firebase';
 
 import { createDonation } from '../api';
 const { Content } = Layout;
@@ -74,17 +73,6 @@ const FormItem = styled(Form.Item)`
     justify-content: center;
   }
 `;
-
-const AddressItem = styled(Form.Item)`
-  display: flex;
-  padding: 20px;
-  justify-content: center;
-  && .ant-form-item-control-input-content {
-    display: flex;
-    justify-content: center;
-  }
-`;
-
 
 const FormButton = styled(Button)`
   margin-top: 15px;
@@ -165,12 +153,6 @@ function CollectionInfoContent(props) {
   }
 
   function ModalCustom (props) {
-  
-    
-      // onClose 
-      const handleOk = () => {
-        setVisible(false);
-      };
     
       const handleCancel = () => {
         setVisible(false);

@@ -1,5 +1,3 @@
-import { getUser } from "../api";
-
 // update a product
 export const updateProduct = (name, amount, description) => state => {
   return {
