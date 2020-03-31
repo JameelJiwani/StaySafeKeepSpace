@@ -49,11 +49,10 @@ function NavBar(props) {
         </Flex>
         </Col>
 
-
         {props.user.loggedIn? 
         <Col span={8} offset={8} content="true" >
           <div style={{justifyContent: 'center', textAlign: 'center', paddingTop: 10}}>
-              <Button type="primary" danger onClick={signOut}> Sign Out</Button>
+            <Button type="primary" danger onClick={signOut}> Sign Out</Button>
           </div>
         </Col> 
         :

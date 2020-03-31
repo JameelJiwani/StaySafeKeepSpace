@@ -94,26 +94,17 @@ const FlexForm = styled(Form)`
 `;
 
 const ModalCustom = subscribe()((props) => {
-    
-  const { isVisible } = props.modal;
-  const hide = false;
-  const [a , setA] = useState('');
-  const [d , setD] = useState('');
   
+  const { isVisible } = props.modal;
+
+  // find the selected product
   var selected = [];
   if(props.items)
     selected = props.items.filter( e => e.name === props.name);
 
+  // store the values
   const amount = selected.length === 0 ? "" : selected[0].amount;
   const description = selected.length === 0 ? "" : selected[0].description;
-  console.log('items', props.items, "OOF", props.name);
-  console.log('result of selected::', selected, '\namount from last prodcut::', amount, '\ndescription rom last prodcut::', description);
-  console.log("A:",a ,"D:",d)
-  
-  // console.log("porps in modal", props);
-  const handleCancel = () => {
-    props.updateModalIsVisible(isVisible);
-  };
 
   const addProductToList = (name, amount, description) => {
     var product = {
@@ -122,26 +113,22 @@ const ModalCustom = subscribe()((props) => {
       amount,
     };
     props.pushProduct(props.name,product)
-    
-    // console.log('list origin', props.items);
-  
     props.updateModalIsVisible(isVisible);
-  }
-  const onFinish = values => {
+  };
 
-    // console.log("onfinsh values of the product", values);
+  const onFinish = values => {
     addProductToList(props.name, values.amount, values.description);
-  }
+  };
+
 return (
   <Modal
       destroyOnClose={true}
       closable={true}
-      footer={null}
       visible={isVisible}
       title={props.name}
-      onCancel={handleCancel}
+      onCancel={()=> props.updateModalIsVisible(isVisible)}
       footer={[
-        <Button key="back" onClick={handleCancel}>
+        <Button key="back" onClick={() => props.updateModalIsVisible(isVisible)}>
           Return
         </Button>
       ]}
@@ -152,44 +139,39 @@ return (
     </Form.Item>
     
     <Form.Item
-    value={amount}
-        name="description"
-        rules={[{ required: true, message: " " }]}
-        onChange={e => setA.bind(null,e.target.value)}
-            
+      name="description"
+      rules={[{ required: true, message: " " }]}
     >
-
       <StyledInput placeholder={!description? "Description" :description}/>
     </Form.Item>
     <Form.Item
-        name="amount"
-        rules={[{ required: true, message: " " }]}
+      name="amount"
+      rules={[{ required: true, message: " " }]}
     >
       <StyledInput placeholder={!amount? "Duantity" :amount} />
     </Form.Item>
     <FormItem>
-          <FormButton type="primary" htmlType="submit">
-          Add
-          </FormButton>
+      <FormButton type="primary" htmlType="submit">
+        Add
+      </FormButton>
     </FormItem>
     </FlexForm>
   </Modal>
-  )
+);
 });
 
 function CollectionInfoContent(props) {
+
   const { setCurrentStep } = props;
   const [options, setOptions] = useState({});
 
   const [ address, setAddress] = useState('');
   const [ product , setProduct] = useState('');  
 
-    // pop
-    const triggerModal = (name) => {
-      props.updateModalIsVisible(false, name === product);
-      setProduct(name);
-   
-    }
+  const triggerModal = (name) => {
+    props.updateModalIsVisible(false);
+    setProduct(name);
+  }
 
   function toggleOptions(value) {
     let copyOptions = { ...options };
@@ -217,19 +199,20 @@ function CollectionInfoContent(props) {
   }
 
   async function submitData(e) {
+
     e.preventDefault();
     setCurrentStep('success');
     // TODO: take only zip code and conver to address WE can do that
     const payload = {
       products: props.items,
       address
-    }
-   
+    };
+  
     const result = await createDonation(payload);
     if( !result){
       message.error("error create donation");
     }
-  }
+};
 
  
   return (
@@ -243,7 +226,7 @@ function CollectionInfoContent(props) {
             className={options.faceMask ? "selected" : ""}
             onClick={() => toggleOptions("Face Masks")}
           >
-            <FaceMask />
+          <FaceMask />
             <label style={{ marginTop: "3px" }}>Face Mask</label>
           </IconButton>
           <IconButton

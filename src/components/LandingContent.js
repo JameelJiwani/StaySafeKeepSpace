@@ -13,51 +13,49 @@ const BlockContent = styled(Content)`
   display: flex;
 `;
 
-
 function LandingContent(props) {
 
-
   const { setCurrentStep } = props;
+  const updateUser = props.updateUser;
 
   useEffect(() => {
     try {
 
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          props.updateUser({
+          updateUser({
             loggedIn: true
           });
           setCurrentStep('collectInfo');
        
         } else {
-          props.updateUser({
+          updateUser({
             loggedIn: false
           });
         }
       });
 
     } catch (err) {
-      props.updateUser({
+      updateUser({
         loggedIn: false
       });
     }
 
-  }, []);
+  }, [setCurrentStep, updateUser]);
 
-    return (
-        <BlockContent>
-            <Grid fluid>
-                <Row center="xs">
-                <Col center="xs">
-                 <ValueProp />
-                </Col>
-                <Col center="xs">
-                  <CTARegister setCurrentStep={setCurrentStep} />
-                </Col>
-                    </Row>
-            </Grid>
-        </BlockContent>
-    );
+  return (
+    <BlockContent>
+      <Grid fluid>
+        <Row center="xs">
+          <Col center="xs">
+            <ValueProp />
+          </Col>
+          <Col center="xs">
+            <CTARegister setCurrentStep={props.setCurrentStep} />
+          </Col>
+        </Row>
+      </Grid>
+    </BlockContent>
+  );
 }
-
 export default subscribe()(LandingContent);
