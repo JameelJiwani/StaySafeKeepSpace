@@ -3,7 +3,7 @@ import Confetti from 'react-confetti'
 import Checkmark from "../Icons/Checkmark";
 import {Typography} from "antd";
 import styled from "styled-components";
-import { Row, Col } from 'react-flexbox-grid';
+import { Col } from 'react-flexbox-grid';
 
 const { Title } = Typography;
 

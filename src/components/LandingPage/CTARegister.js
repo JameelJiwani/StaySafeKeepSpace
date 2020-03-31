@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Input, Select, Tooltip, Button, Typography, message } from 'antd';
-import styled from 'styled-components';
-import { Grid, Row, Col } from 'react-flexbox-grid';
-import firebase from '../../firebase';
-import {subscribe} from 'react-contextual';
-import { getUser } from '../../api';
-const { Option } = Select;
+import React, { useEffect } from "react";
+import { Form, Input, Button, Typography, message } from "antd";
+import styled from "styled-components";
+import { Row, Col } from "react-flexbox-grid";
+import firebase from "../../firebase";
+import { subscribe } from "react-contextual";
+import { getUser } from "../../api";
 const { Title } = Typography;
 
 const CTAContainer = styled(Col)`
@@ -49,62 +48,56 @@ const FormItem = styled(Form.Item)`
   }
 `;
 
- function LandingContent(props) {
-  
+function LandingContent(props) {
   const { setCurrentStep } = props;
 
-  useEffect(()=>{
-    if( props.user.loggedIn)
-    {
-      setCurrentStep('collectInfo');
+  useEffect(() => {
+    if (props.user.loggedIn) {
+      setCurrentStep("collectInfo");
     }
-  },[]);
- const onFinish = async values => {
-
+  }, []);
+  const onFinish = async values => {
     const firstName = values.firstName;
     const lastName = values.lastName;
     const email = values.email;
     const password = values.password;
-    
+
     try {
-      const signedUpUser = await firebase.auth()
-      .createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      
-    if( signedUpUser){
+      const signedUpUser = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password);
 
-      const db = await firebase.firestore()
-        .doc(`users/${signedUpUser.user.uid}`)
-        .set({
-          firstName,
-          lastName,
-          email,
-          type: 'donor'
+      if (signedUpUser) {
+        await firebase
+          .firestore()
+          .doc(`users/${signedUpUser.user.uid}`)
+          .set(
+            {
+              firstName,
+              lastName,
+              email,
+              type: "donor"
+            },
+            {
+              merge: true
+            }
+          );
 
-        },
-        {
-          merge: true
+        const userInfo = await getUser(signedUpUser.user.uid);
+
+        props.updateUser({
+          ...userInfo,
+          loggedIn: true,
+          loading: false
         });
-        
-      const userInfo = await getUser(signedUpUser.user.uid);
 
-      props.updateUser({
-        ...userInfo, 
-        loggedIn: true,
-        loading: false,
-      });
-
-      setCurrentStep('collectInfo');
-     }
-
-    } catch(error ){
+        setCurrentStep("collectInfo");
+      }
+    } catch (error) {
       console.debug(error);
-      // modal pop up 
+      // modal pop up
       message.error(error.message);
-    }   
-
+    }
   };
 
   return (
@@ -127,10 +120,7 @@ const FormItem = styled(Form.Item)`
             >
               <StyledInput placeholder="Last Name" />
             </Form.Item>
-            <Form.Item
-              name="email"
-              rules={[{ required: true, message: " " }]}
-            >
+            <Form.Item name="email" rules={[{ required: true, message: " " }]}>
               <StyledInput placeholder="Email" />
             </Form.Item>
             <Form.Item

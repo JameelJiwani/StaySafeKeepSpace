@@ -1,5 +1,5 @@
-import React, {useEffect, useSate} from 'react';
-import { Layout, Typography } from 'antd';
+import React, {useEffect} from 'react';
+import { Layout } from 'antd';
 import ValueProp from './LandingPage/ValueProp'
 import CTARegister from './LandingPage/CTARegister'
 import styled from 'styled-components';
@@ -8,11 +8,6 @@ import firebase from '../firebase'
 import { subscribe } from 'react-contextual';
 const { Content } = Layout;
 
-
-const Flex = styled(Col)`
-  display: flex;
-  justify-content: center;
-`;
 
 const BlockContent = styled(Content)`
   display: flex;
