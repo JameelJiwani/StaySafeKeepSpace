@@ -17,7 +17,7 @@ const AppWrapper = styled(Layout)`
   width: 99%;
 `;
 
-function App(props) {
+function App() {
     const [currentStep, setCurrentStep] = useState('home');
   return (
     <AppWrapper>

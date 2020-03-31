@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Layout, Button, Typography, Input, Modal, message } from "antd";
+import { Layout, Button, Typography, Input, message } from "antd";
 import { Row, Col } from "react-flexbox-grid";
 import styled from "styled-components";
 import { ReactComponent as FaceMask } from "../Icons/FaceMask.svg";
@@ -64,18 +64,6 @@ const StyledInput = styled(Input)`
   padding: 5px;
 `;
 
-
-const FormItem = styled(Form.Item)`
-  display: flex;
-  padding: 20px;
-  justify-content: center;
-  width: 100%;
-  && .ant-form-item-control-input-content {
-    display: flex;
-    justify-content: center;
-  }
-`;
-
 const FormButton = styled(Button)`
   margin-top: 15px;
   border-radius: 5px;
@@ -84,18 +72,8 @@ const FormButton = styled(Button)`
   padding: 5px;
   width: 40%;
 `;
-const FlexForm = styled(Form)`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background: #f5f5f5;
-  border-radius: 5px;
-  padding: 20px;
-  margin: auto;
-`;
 
-
-function CollectionInfoContent(props) {
+const CollectionInfoContent =  subscribe()((props) => {
 
   const { setCurrentStep } = props;
   const [options, setOptions] = useState({});
@@ -106,7 +84,7 @@ function CollectionInfoContent(props) {
   const triggerModal = (name) => {
     props.updateModalIsVisible(false);
     setProduct(name);
-  }
+  };
 
   function toggleOptions(value) {
     let copyOptions = { ...options };
@@ -207,6 +185,6 @@ function CollectionInfoContent(props) {
       </div>
     </BlockContent>
   );
-}
+});
 
-export default subscribe()(CollectionInfoContent);
+export default CollectionInfoContent;
