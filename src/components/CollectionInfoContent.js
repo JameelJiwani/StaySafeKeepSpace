@@ -97,6 +97,8 @@ const ModalCustom = subscribe()((props) => {
     
   const { isVisible } = props.modal;
   const hide = false;
+  const [a , setA] = useState('');
+  const [d , setD] = useState('');
   
   var selected = [];
   if(props.items)
@@ -105,27 +107,8 @@ const ModalCustom = subscribe()((props) => {
   const amount = selected.length === 0 ? "" : selected[0].amount;
   const description = selected.length === 0 ? "" : selected[0].description;
   console.log('items', props.items, "OOF", props.name);
-  console.log('result of selected', selected, 'amount', amount, 'description', description);
-  // const show = (items, name, attr ) => {
-  //   console.log("items", items, "name", name, "attr", attr)
-  //   if (items){
-  //     const selectedProduct = items.filter( e => e.name === name);
-  //     console.log("found", selectedProduct)
-  //     if ( selectedProduct.length === 0) {
-  //       console.log("!selected", !selectedProduct)
-  //       return ''.toString();
-  //     }
-  //     else {
-  //       return selectedProduct[attr];
-  //     }
-  //   } else {
-  //     return " ";
-  //   }
-      
-  // }
- 
- 
-
+  console.log('result of selected::', selected, '\namount from last prodcut::', amount, '\ndescription rom last prodcut::', description);
+  console.log("A:",a ,"D:",d)
   
   // console.log("porps in modal", props);
   const handleCancel = () => {
@@ -151,7 +134,7 @@ const ModalCustom = subscribe()((props) => {
   }
 return (
   <Modal
-    
+      destroyOnClose={true}
       closable={true}
       footer={null}
       visible={isVisible}
@@ -172,16 +155,17 @@ return (
     value={amount}
         name="description"
         rules={[{ required: true, message: " " }]}
+        onChange={e => setA.bind(null,e.target.value)}
             
     >
 
-      <StyledInput defaultValue={description} placeholder="Description" />
+      <StyledInput placeholder={!description? "Description" :description}/>
     </Form.Item>
     <Form.Item
         name="amount"
         rules={[{ required: true, message: " " }]}
     >
-      <StyledInput defaultValue={amount} placeholder="quantity" />
+      <StyledInput placeholder={!amount? "Duantity" :amount} />
     </Form.Item>
     <FormItem>
           <FormButton type="primary" htmlType="submit">
