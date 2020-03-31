@@ -53,7 +53,7 @@ function NavBar(props) {
         {props.user.loggedIn? 
         <Col span={8} offset={8} content >
           <div style={{justifyContent: 'center', textAlign: 'center', paddingTop: 10}}>
-              <Button type="primary" danger onClick={signOut}> Sign Out</Button>
+              <Button type="secondary" onClick={signOut}> Sign Out</Button>
           </div>
         </Col> 
         :

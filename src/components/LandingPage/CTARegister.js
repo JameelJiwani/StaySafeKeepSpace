@@ -31,6 +31,12 @@ const StyledInput = styled(Input)`
   padding: 5px;
 `;
 
+const StyledPassword = styled(Input.Password)`
+  border-radius: 5px;
+  width: 500px;
+  padding: 5px;
+`;
+
 const FormButton = styled(Button)`
   margin-top: 15px;
   border-radius: 5px;
@@ -127,10 +133,10 @@ function LandingContent(props) {
               name="password"
               rules={[{ required: true, message: " " }]}
             >
-              <Input.Password />
+              <StyledPassword placeholder="Password"/>
             </Form.Item>
             <FormItem>
-              <FormButton type="primary" htmlType="submit">
+              <FormButton type="primary" block htmlType="submit">
                 Register
               </FormButton>
             </FormItem>

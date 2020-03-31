@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Layout, Button, Typography, Input, Modal, message } from "antd";
+import { Form, Layout, Button, Typography, Input, Modal, message, Tooltip } from "antd";
 import { Row, Col } from "react-flexbox-grid";
 import styled from "styled-components";
 import FaceMask from "../Icons/FaceMask";
@@ -26,15 +26,26 @@ const BlockCol = styled(Col)`
   position: center;
   justify-content: center;
   background: #f5f5f5;
-  width: 95%;
+  width: 80%;
   border-radius: 5px;
   padding: 20px;
+  padding-bottom: 40px;
+  padding-top: 40px;
   align-items: center;
 `;
 
 const InnerCol = styled(Col)`
-  margin-left: 180px;
-  margin-right: 180px;
+  margin-left: 12px;
+  margin-right: 12px;
+  align-items: center;
+`;
+
+const AddrInputCol = styled(Col)`
+  display: flex;
+  position: center;
+  justify-content: center;
+  align-items: center;
+  width:400px;
 `;
 
 const IconButton = styled(Button)`
@@ -62,6 +73,11 @@ const StyledInput = styled(Input)`
   padding: 5px;
 `;
 
+const StyledModelInput = styled(Input)`
+  border-radius: 5px;
+  width: 250px;
+  padding: 5px;
+`;
 
 const FormItem = styled(Form.Item)`
   display: flex;
@@ -82,6 +98,16 @@ const FormButton = styled(Button)`
   padding: 5px;
   width: 40%;
 `;
+
+const ModelButton = styled(Button)`
+  margin-top: 15px;
+  border-radius: 5px;
+  margin-left: 100px;
+  margin-right:100px;
+  padding: 5px;
+  width: 40%;
+`;
+
 const FlexForm = styled(Form)`
   display: flex;
   align-items: center;
@@ -92,6 +118,88 @@ const FlexForm = styled(Form)`
   margin: auto;
 `;
 
+function formatNumber(value) {
+  value += '';
+  const list = value.split('.');
+  const prefix = list[0].charAt(0) === '-' ? '-' : '';
+  let num = prefix ? list[0].slice(1) : list[0];
+  let result = '';
+  while (num.length > 3) {
+    result = `,${num.slice(-3)}${result}`;
+    num = num.slice(0, num.length - 3);
+  }
+  if (num) {
+    result = num + result;
+  }
+  return `${prefix}${result}${list[1] ? `.${list[1]}` : ''}`;
+}
+
+class NumericInput extends React.Component {
+  onChange = e => {
+    const { value } = e.target;
+    const reg = /^-?[0-9]*(\.[0-9]*)?$/;
+    if ((!isNaN(value) && reg.test(value)) || value === '' || value === '-') {
+      this.props.onChange(value);
+    }
+  };
+
+  // '.' at the end or only '-' in the input box.
+  onBlur = () => {
+    const { value, onBlur, onChange } = this.props;
+    let valueTemp = value;
+    if (value.charAt(value.length - 1) === '.' || value === '-') {
+      valueTemp = value.slice(0, -1);
+    }
+    onChange(valueTemp.replace(/0*(\d+)/, '$1'));
+    if (onBlur) {
+      onBlur();
+    }
+  };
+
+  render() {
+    const { value } = this.props;
+    const title = value ? (
+      <span className="numeric-input-title">{value !== '-' ? formatNumber(value) : '-'}</span>
+    ) : (
+      'Input a number'
+    );
+    return (
+      <Tooltip
+        trigger={['focus']}
+        title={title}
+        placement="topLeft"
+        overlayClassName="numeric-input"
+      >
+        <Input
+          {...this.props}
+          onChange={this.onChange}
+          onBlur={this.onBlur}
+          placeholder="Quantity"
+          maxLength={25}
+        />
+      </Tooltip>
+    );
+  }
+}
+
+class NumericInputDemo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: '' };
+  }
+
+  onChange = value => {
+    this.setState({ value });
+  };
+
+  render() {
+    return (
+      <NumericInput style={{ width: 250 }} value={this.state.value} onChange={this.onChange} />
+    );
+  }
+}
+
+
 function CollectionInfoContent(props) {
   const { setCurrentStep } = props;
   const [options, setOptions] = useState({});
@@ -100,17 +208,14 @@ function CollectionInfoContent(props) {
   const [ address, setAddress] = useState('');
   const [ product , setProduct] = useState('');  
 
+  const [isSet, setIsSet] = useState(false);
   const [items, setItems] = useState([]);
     // pop
     const triggerModal = (name) => {
       setVisible(true);
       setProduct(name);
-      const found = items.find(e => e.name === product);
-      
     }
-  console.log("pro", product);
-const x = product ===undefined ? "first false" : !props.products[product].isSet ?"second false":!props.products[product].description;
-      console.log("!product  ?", x);
+
   function toggleOptions(value) {
     let copyOptions = { ...options };
     triggerModal(value);
@@ -150,26 +255,24 @@ const x = product ===undefined ? "first false" : !props.products[product].isSet 
       message.error("error create donation");
     }
   }
-const e = '';
-console.log("what is !e ? //", !e);
-console.log("!props.products[product]",props.products[product]);
-//console.log("this is ",!product && !props.products[product]["description"]);
 
   function ModalCustom (props) {
     
+      const found = items.find( e => e.name === props.name);
       const handleCancel = () => {
         setVisible(false);
       };
     
       const addProductToList = (name, amount, description) => {
+       const remove = items.filter( e => e.name !== props.name);
         var product = {
           name,
           description,
           amount,
         };
-        var tempList = items;
-        tempList.push(product);
-        setItems(tempList);
+      
+        remove.push(product);
+        setItems(remove);
         console.log("prodcut", product);
         console.log('list origin', items);
       
@@ -178,15 +281,11 @@ console.log("!props.products[product]",props.products[product]);
 
       }
       const onFinish = values => {
-        props.updateProducts(
-          props.name,
-          { isSet: true,
-            amount: values.amount,
-            description: values.description
-          });
-        console.log("onfinsh values of the product", values);
+        
+        console.log("onfinish values of the product", values);
         addProductToList(props.name, values.amount, values.description);
       }
+      
     return (
       <Modal
           closable={true}
@@ -211,18 +310,18 @@ console.log("!props.products[product]",props.products[product]);
                 
         >
     
-          <StyledInput value={ product ===undefined ? "" : !props.products[product].isSet ? "": props.products[product].description } placeholder="Description" />
+          <StyledModelInput value={ !found ? "": props.products[product].description } placeholder="Description" />
         </Form.Item>
         <Form.Item
             name="amount"
             rules={[{ required: true, message: " " }]}
         >
-          <StyledInput value={ product === undefined ? "" : !props.products[product].isSet ? "": props.products[product].amount } placeholder="quantity" />
+        <NumericInputDemo value={ !found ? "": props.products[product].amount } placeholder="Quantity" />
         </Form.Item>
         <FormItem>
-              <FormButton type="primary" htmlType="submit">
+              <ModelButton type="primary" block htmlType="submit">
               Add
-              </FormButton>
+              </ModelButton>
         </FormItem>
         </FlexForm>
       </Modal>
@@ -266,16 +365,17 @@ console.log("!props.products[product]",props.products[product]);
           </IconButton>
         </Row>
         <InnerCol>
-        <Row left="xs" width="60px" style={{ paddingLeft: "15px" }}>
+        <Row center="xs" width="60px" style={{ paddingLeft: "15px" }}>
           <Title level={3}>Please enter your drop off address</Title>
-        </Row>
-        <Row>
-         
-          <StyledInput placeholder=" Enter your drop off address" size="large"  onChange={e => setAddress(e.target.value)}/>
         </Row>
         </InnerCol>
         <Row center="xs">
-          <FormButton type="primary" onClick={(e) => submitData(e)}>
+          <AddrInputCol>
+            <StyledInput placeholder=" Enter your drop off address" size="large"  onChange={e => setAddress(e.target.value)}/>
+          </AddrInputCol>
+        </Row>
+        <Row center="xs">
+          <FormButton type="primary" block onClick={(e) => submitData(e)}>
             Donate
           </FormButton>
         </Row>
