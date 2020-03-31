@@ -40,3 +40,33 @@ export const updateUser = (key, value) => state => {
   };
 };
   
+export const updateModalIsVisible = (isVisible, isSame) => state => {
+  return {
+    modal:{
+      isVisible: !isVisible,
+      isSame: isSame
+    }
+  }
+}
+
+
+  
+export const pushProduct = (name, payload) => state => {
+
+  if (state.items) {
+    const products = state.items.filter( e => e.name !== name);
+    products.push(payload);
+    const items = products;
+    return {
+      items
+    }
+  } else {
+    return {
+      items: [
+        payload
+      ]
+    }
+  }
+
+
+}

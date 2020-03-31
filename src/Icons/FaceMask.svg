@@ -1,7 +1,4 @@
-import React from 'react';
 
-function FaceMask() {
-    return (
         <svg id="Capa_1" enableBackground="new 0 0 512 512" height="30px" viewBox="0 0 512 512" width="30px"
              xmlns="http://www.w3.org/2000/svg">
             <g>
@@ -19,7 +16,4 @@ function FaceMask() {
                     fill="#f5ebcd"/>
             </g>
         </svg>
-    );
-}
-
-export default FaceMask;
+  

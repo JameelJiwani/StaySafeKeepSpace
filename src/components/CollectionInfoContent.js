@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Form, Layout, Button, Typography, Input, Modal, message } from "antd";
 import { Row, Col } from "react-flexbox-grid";
 import styled from "styled-components";
-import FaceMask from "../Icons/FaceMask";
-import Gloves from "../Icons/Gloves";
-import HandSanitizer from "../Icons/HandSanitizer";
-import Suit from "../Icons/Suit";
+import { ReactComponent as FaceMask } from "../Icons/FaceMask.svg";
+import { ReactComponent as Gloves } from "../Icons/Gloves.svg";
+import { ReactComponent as Suit } from "../Icons/Suit.svg";
+import { ReactComponent as HandSanitizer} from '../Icons/disinfectant.svg';
 
+import { subscribe } from 'react-contextual';
 import { createDonation } from '../api';
 const { Content } = Layout;
 const { Title } = Typography;
@@ -92,19 +93,118 @@ const FlexForm = styled(Form)`
   margin: auto;
 `;
 
+const ModalCustom = subscribe()((props) => {
+    
+  const { isVisible } = props.modal;
+  const hide = false;
+  
+  var selected = [];
+  if(props.items)
+    selected = props.items.filter( e => e.name === props.name);
+
+  const amount = selected.length === 0 ? "" : selected[0].amount;
+  const description = selected.length === 0 ? "" : selected[0].description;
+  console.log('items', props.items, "OOF", props.name);
+  console.log('result of selected', selected, 'amount', amount, 'description', description);
+  // const show = (items, name, attr ) => {
+  //   console.log("items", items, "name", name, "attr", attr)
+  //   if (items){
+  //     const selectedProduct = items.filter( e => e.name === name);
+  //     console.log("found", selectedProduct)
+  //     if ( selectedProduct.length === 0) {
+  //       console.log("!selected", !selectedProduct)
+  //       return ''.toString();
+  //     }
+  //     else {
+  //       return selectedProduct[attr];
+  //     }
+  //   } else {
+  //     return " ";
+  //   }
+      
+  // }
+ 
+ 
+
+  
+  // console.log("porps in modal", props);
+  const handleCancel = () => {
+    props.updateModalIsVisible(isVisible);
+  };
+
+  const addProductToList = (name, amount, description) => {
+    var product = {
+      name,
+      description,
+      amount,
+    };
+    props.pushProduct(props.name,product)
+    
+    // console.log('list origin', props.items);
+  
+    props.updateModalIsVisible(isVisible);
+  }
+  const onFinish = values => {
+
+    // console.log("onfinsh values of the product", values);
+    addProductToList(props.name, values.amount, values.description);
+  }
+return (
+  <Modal
+    
+      closable={true}
+      footer={null}
+      visible={isVisible}
+      title={props.name}
+      onCancel={handleCancel}
+      footer={[
+        <Button key="back" onClick={handleCancel}>
+          Return
+        </Button>
+      ]}
+  >
+  <FlexForm onFinish={onFinish}>
+    <Form.Item>
+      <Title level={3}>More Information</Title>
+    </Form.Item>
+    
+    <Form.Item
+    value={amount}
+        name="description"
+        rules={[{ required: true, message: " " }]}
+            
+    >
+
+      <StyledInput defaultValue={description} placeholder="Description" />
+    </Form.Item>
+    <Form.Item
+        name="amount"
+        rules={[{ required: true, message: " " }]}
+    >
+      <StyledInput defaultValue={amount} placeholder="quantity" />
+    </Form.Item>
+    <FormItem>
+          <FormButton type="primary" htmlType="submit">
+          Add
+          </FormButton>
+    </FormItem>
+    </FlexForm>
+  </Modal>
+  )
+});
+
 function CollectionInfoContent(props) {
   const { setCurrentStep } = props;
   const [options, setOptions] = useState({});
 
-  const [ visible, setVisible] = useState(false);
   const [ address, setAddress] = useState('');
   const [ product , setProduct] = useState('');  
 
-  const [items, setItems] = useState([]);
     // pop
     const triggerModal = (name) => {
-      setVisible(true);
+      props.updateModalIsVisible(false, name === product);
       setProduct(name);
+   
     }
 
   function toggleOptions(value) {
@@ -137,7 +237,7 @@ function CollectionInfoContent(props) {
     setCurrentStep('success');
     // TODO: take only zip code and conver to address WE can do that
     const payload = {
-      products: items,
+      products: props.items,
       address
     }
    
@@ -147,75 +247,7 @@ function CollectionInfoContent(props) {
     }
   }
 
-  function ModalCustom (props) {
-    
-      const handleCancel = () => {
-        setVisible(false);
-      };
-    
-      const addProductToList = (name, amount, description) => {
-        var product = {
-          name,
-          description,
-          amount,
-        };
-        var tempList = items;
-        tempList.push(product);
-        setItems(tempList);
-        console.log("prodcut", product);
-        console.log('list origin', items);
-      
-        setVisible(false);
-
-
-      }
-      const onFinish = values => {
-
-        console.log("onfinsh values of the product", values);
-        addProductToList(props.name, values.amount, values.description);
-      }
-    return (
-      <Modal
-          closable={true}
-          footer={null}
-          visible={props.visible}
-          title={props.name}
-          onCancel={handleCancel}
-          footer={[
-            <Button key="back" onClick={handleCancel}>
-              Return
-            </Button>
-          ]}
-      >
-      <FlexForm onFinish={onFinish}>
-        <Form.Item>
-          <Title level={3}>More Information</Title>
-        </Form.Item>
-        
-        <Form.Item
-            name="description"
-            rules={[{ required: true, message: " " }]}
-                
-        >
-    
-          <StyledInput placeholder="Description" />
-        </Form.Item>
-        <Form.Item
-            name="amount"
-            rules={[{ required: true, message: " " }]}
-        >
-          <StyledInput placeholder="quantity" />
-        </Form.Item>
-        <FormItem>
-              <FormButton type="primary" htmlType="submit">
-              Add
-              </FormButton>
-        </FormItem>
-        </FlexForm>
-      </Modal>
-      )
-  };
-
+ 
   return (
     <BlockContent>
       <BlockCol>
@@ -269,10 +301,10 @@ function CollectionInfoContent(props) {
       </BlockCol>
 
       <div>
-      <ModalCustom visible={visible} name={product}/>
+      <ModalCustom name={product}/>
       </div>
     </BlockContent>
   );
 }
 
-export default CollectionInfoContent;
+export default subscribe()(CollectionInfoContent);
