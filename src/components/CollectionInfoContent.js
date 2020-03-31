@@ -6,7 +6,7 @@ import FaceMask from "../Icons/FaceMask";
 import Gloves from "../Icons/Gloves";
 import HandSanitizer from "../Icons/HandSanitizer";
 import Suit from "../Icons/Suit";
-
+import { subscribe } from 'react-contextual';
 import { createDonation } from '../api';
 const { Content } = Layout;
 const { Title } = Typography;
@@ -105,8 +105,12 @@ function CollectionInfoContent(props) {
     const triggerModal = (name) => {
       setVisible(true);
       setProduct(name);
+      const found = items.find(e => e.name === product);
+      
     }
-
+  console.log("pro", product);
+const x = product ===undefined ? "first false" : !props.products[product].isSet ?"second false":!props.products[product].description;
+      console.log("!product  ?", x);
   function toggleOptions(value) {
     let copyOptions = { ...options };
     triggerModal(value);
@@ -146,6 +150,10 @@ function CollectionInfoContent(props) {
       message.error("error create donation");
     }
   }
+const e = '';
+console.log("what is !e ? //", !e);
+console.log("!props.products[product]",props.products[product]);
+//console.log("this is ",!product && !props.products[product]["description"]);
 
   function ModalCustom (props) {
     
@@ -170,7 +178,12 @@ function CollectionInfoContent(props) {
 
       }
       const onFinish = values => {
-
+        props.updateProducts(
+          props.name,
+          { isSet: true,
+            amount: values.amount,
+            description: values.description
+          });
         console.log("onfinsh values of the product", values);
         addProductToList(props.name, values.amount, values.description);
       }
@@ -198,13 +211,13 @@ function CollectionInfoContent(props) {
                 
         >
     
-          <StyledInput placeholder="Description" />
+          <StyledInput value={ product ===undefined ? "" : !props.products[product].isSet ? "": props.products[product].description } placeholder="Description" />
         </Form.Item>
         <Form.Item
             name="amount"
             rules={[{ required: true, message: " " }]}
         >
-          <StyledInput placeholder="quantity" />
+          <StyledInput value={ product === undefined ? "" : !props.products[product].isSet ? "": props.products[product].amount } placeholder="quantity" />
         </Form.Item>
         <FormItem>
               <FormButton type="primary" htmlType="submit">
@@ -275,4 +288,4 @@ function CollectionInfoContent(props) {
   );
 }
 
-export default CollectionInfoContent;
+export default subscribe()(CollectionInfoContent);

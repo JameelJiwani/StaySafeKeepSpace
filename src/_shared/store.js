@@ -13,10 +13,27 @@ export default {
     loading: false
   },
 
-  product: {
-    name: '',
+  products: { 
+    "Face Masks": {
+    isSet: false,
     amount: '',
     description: ''
+    },
+    "Goggles and Gloves": {
+    isSet: false,
+    amount: '',
+    description: ''
+    },
+    "Full Body Suits": {
+    isSet: false,
+    amount: '',
+    description: ''
+    },
+    "Hand Sanitizers": {
+    isSet: false,
+    amount: '',
+    description: ''
+    }
   },
 
   donation: {

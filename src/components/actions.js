@@ -1,12 +1,24 @@
 // update a product
-export const updateProduct = (name, amount, description) => state => {
-  return {
-    product:{
-      name,
-      amount,
-      description
+export const updateProducts = (key,value) => state => {
+    let products = {};
+    console.log("state----", state)
+    if (typeof key === 'object') {
+      const dataToAppend = key;
+      products = {
+        ...state.product,
+        ...dataToAppend
+      };
+    } else {
+      products = {
+        ...state.products,
+        [key]: value
+      };
     }
-  }
+    console.log("products in update", products);
+    return {
+      products
+  };
+  
 }
 
 
