@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Form, Layout, Checkbox, Button, Typography, Input, Modal } from "antd";
+import { Form, Layout, Checkbox, Button, Typography, Input, Modal, message } from "antd";
 import { Grid, Row, Col } from "react-flexbox-grid";
 import styled from "styled-components";
 import FaceMask from "../Icons/FaceMask";
 import Gloves from "../Icons/Gloves";
 import HandSanitizer from "../Icons/HandSanitizer";
 import Suit from "../Icons/Suit";
+import firebase from '../firebase';
 
+import { createDonation } from '../api';
 const { Content } = Layout;
 const { Title } = Typography;
 
@@ -61,6 +63,29 @@ const StyledInput = styled(Input)`
   padding: 5px;
 `;
 
+
+const FormItem = styled(Form.Item)`
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  width: 100%;
+  && .ant-form-item-control-input-content {
+    display: flex;
+    justify-content: center;
+  }
+`;
+
+const AddressItem = styled(Form.Item)`
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  && .ant-form-item-control-input-content {
+    display: flex;
+    justify-content: center;
+  }
+`;
+
+
 const FormButton = styled(Button)`
   margin-top: 15px;
   border-radius: 5px;
@@ -69,32 +94,31 @@ const FormButton = styled(Button)`
   padding: 5px;
   width: 40%;
 `;
+const FlexForm = styled(Form)`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: #f5f5f5;
+  border-radius: 5px;
+  padding: 20px;
+  margin: auto;
+`;
 
 function CollectionInfoContent(props) {
   const { setCurrentStep } = props;
   console.log("set current", props);
   const [options, setOptions] = useState({});
 
-  // modal trigger
   const [ visible, setVisible] = useState(false);
-  const [ product , setProduct] = useState('');
-  // pop
-  const triggerModal = (name) => {
-    setVisible(true);
-    setProduct(name);
-  }
-  // onClose 
-  const closeModal = () => setVisible(false);
-  const handleOk = () => {
+  const [ address, setAddress] = useState('');
+  const [ product , setProduct] = useState('');  
 
-    setVisible(false);
-  };
-
-  const handleCancel = () => {
-    setVisible(false);
-  };
-
-
+  const [items, setItems] = useState([]);
+    // pop
+    const triggerModal = (name) => {
+      setVisible(true);
+      setProduct(name);
+    }
 
   function toggleOptions(value) {
     let copyOptions = { ...options };
@@ -123,15 +147,103 @@ function CollectionInfoContent(props) {
     console.log(options);
   }
 
-  function submitData() {
+  async function submitData(e) {
+    e.preventDefault()
+    // console.log("addresss",props)
     setCurrentStep('success');
+    // TODO take only zip code and conver to address WE can do that
+    const payload = {
+      products: items,
+      address
+    }
+   
+    console.log('list origin will be shipped', items);
+    const result = await createDonation(payload);
+    if( !result){
+      message.error("error create donation")
+    }
   }
+
+  function ModalCustom (props) {
+  
+    
+      // onClose 
+      const handleOk = () => {
+        setVisible(false);
+      };
+    
+      const handleCancel = () => {
+        setVisible(false);
+      };
+    
+      const addProductToList = (name, amount, description) => {
+        var product = {
+          name,
+          description,
+          amount,
+        };
+        var tempList = items;
+        tempList.push(product);
+        setItems(tempList);
+        console.log("prodcut", product);
+        console.log('list origin', items);
+      
+        setVisible(false);
+
+
+      }
+      const onFinish = values => {
+
+        console.log("onfinsh values of the product", values);
+        addProductToList(props.name, values.amount, values.description);
+      }
+    return (
+      <Modal
+          closable={true}
+          footer={null}
+          visible={props.visible}
+          title={props.name}
+          onCancel={handleCancel}
+          footer={[
+            <Button key="back" onClick={handleCancel}>
+              Return
+            </Button>
+          ]}
+      >
+      <FlexForm onFinish={onFinish}>
+        <Form.Item>
+          <Title level={3}>More Information</Title>
+        </Form.Item>
+        
+        <Form.Item
+            name="description"
+            rules={[{ required: true, message: " " }]}
+                
+        >
+    
+          <StyledInput placeholder="Description" />
+        </Form.Item>
+        <Form.Item
+            name="amount"
+            rules={[{ required: true, message: " " }]}
+        >
+          <StyledInput placeholder="quantity" />
+        </Form.Item>
+        <FormItem>
+              <FormButton type="primary" htmlType="submit">
+              Add
+              </FormButton>
+        </FormItem>
+        </FlexForm>
+      </Modal>
+      )
+  };
 
   return (
     <BlockContent>
       <BlockCol>
         <Row center="xs">
-          <Title level={5}>What can you spare?</Title>
+          <Title level={2}>What can you donate?</Title>
         </Row>
         <Row style={{ marginBottom: "15px" }} center="xs">
           <IconButton
@@ -160,56 +272,27 @@ function CollectionInfoContent(props) {
             onClick={() => toggleOptions("Full Body Suits")}
           >
             <Suit />
-            <label style={{ marginTop: "3px" }}>Full body suits</label>
+            <label style={{ marginTop: "3px" }}>Full Body Suits</label>
           </IconButton>
         </Row>
         <InnerCol>
         <Row left="xs" width="60px" style={{ paddingLeft: "15px" }}>
-          <Title level={3}>Please enter a pickup location</Title>
+          <Title level={3}>Please enter your drop off address</Title>
         </Row>
         <Row>
-          <StyledInput placeholder="Enter your locality.." size="large" />
+         
+          <StyledInput placeholder=" Enter your drop off address" size="large"  onChange={e => setAddress(e.target.value)}/>
         </Row>
         </InnerCol>
         <Row center="xs">
-          <FormButton type="primary" onClick={() => submitData()}>
+          <FormButton type="primary" onClick={(e) => submitData(e)}>
             Donate
           </FormButton>
         </Row>
       </BlockCol>
 
       <div>
-      <Modal
-            visible={visible}
-            title={product}
-            onOk={handleOk}
-            onCancel={handleCancel}
-            footer={[
-              <Button key="back" onClick={handleCancel}>
-                Return
-              </Button>,
-              <Button key="submit" type="primary" onClick={handleOk}>
-                Submit
-              </Button>,
-            ]}
-        >
-          <Form.Item>
-            <Title level={3}>More Information</Title>
-          </Form.Item>
-          <Form.Item
-              name="description"
-              rules={[{ required: true, message: " " }]}
-          >
-            <StyledInput placeholder="Description" />
-          </Form.Item>
-          <Form.Item
-              name="quantity"
-              rules={[{ required: true, message: " " }]}
-          >
-            <StyledInput placeholder="quantity" />
-          </Form.Item>
-
-        </Modal>
+      <ModalCustom visible={visible} name={product}/>
       </div>
     </BlockContent>
   );
