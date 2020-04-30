@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { Form, Input, Button, Typography, message } from "antd";
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../connect/actions'
+import { Form, Input, Button, Typography } from "antd";
 import styled from "styled-components";
 import { Row, Col } from "react-flexbox-grid";
-import firebase from "../../firebase";
-import { subscribe } from "react-contextual";
-import { getUser } from "../../api";
 const { Title } = Typography;
 
 const CTAContainer = styled(Col)`
@@ -48,7 +47,8 @@ const FormItem = styled(Form.Item)`
   }
 `;
 
-function LandingContent(props) {
+function CTARegister(props) {
+  const dispatch = useDispatch();
   const { setCurrentStep } = props;
   const { loggedIn } = props.user;
   useEffect(() => {
@@ -58,45 +58,46 @@ function LandingContent(props) {
   }, [loggedIn,setCurrentStep]);
 
   const onFinish = async values => {
-    const firstName = values.firstName;
-    const lastName = values.lastName;
+    // const firstName = values.firstName;
+    // const lastName = values.lastName;
     const email = values.email;
     const password = values.password;
 
-    try {
-      const signedUpUser = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password);
+    dispatch(loginUser(email, password));
+    setCurrentStep("collectInfo");
 
-      if (signedUpUser) {
-        await firebase
-          .firestore()
-          .doc(`users/${signedUpUser.user.uid}`)
-          .set(
-            {
-              firstName,
-              lastName,
-              email,
-              type: "donor"
-            },
-            { merge: true }
-          );
-
-        const userInfo = await getUser(signedUpUser.user.uid);
-
-        props.updateUser({
-          ...userInfo,
-          loggedIn: true,
-          loading: false
-        });
-
-        setCurrentStep("collectInfo");
-      }
-    } catch (error) {
-      console.debug(error);
-      // modal pop up
-      message.error(error.message);
-    }
+    // setCurrentStep("collectInfo");
+      // const signedUpUser = await firebase
+      //   .auth()
+      //   .createUserWithEmailAndPassword(email, password);
+      //
+      // if (signedUpUser) {
+      //   console.log(signedUpUser);
+      //   // await firebase
+      //   //   .firestore()
+      //   //   .doc(`users/${signedUpUser.user.uid}`)
+      //   //   .set(
+      //   //     {
+      //   //       firstName,
+      //   //       lastName,
+      //   //       email,
+      //   //       type: "donor"
+      //   //     },
+      //   //     { merge: true }
+      //   //   );
+      //   //
+      //   // const userInfo = await getUser(signedUpUser.user.uid);
+      //
+      //   // TODO: This doesn't do anything useful
+      //   console.log( "TITTIES");
+      //   // await props.updateUser({
+      //   //   ...userInfo,
+      //   //   loggedIn: true,
+      //   //   loading: false
+      //   // });
+      //
+      //   setCurrentStep("collectInfo");
+      // }
   };
 
   return (
@@ -140,4 +141,4 @@ function LandingContent(props) {
   );
 }
 
-export default subscribe()(LandingContent);
+export default CTARegister;

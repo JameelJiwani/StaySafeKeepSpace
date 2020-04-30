@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layout, Button, Typography, Input, message } from "antd";
+import { Layout, Button, Typography, Input } from "antd";
 import { Row, Col } from "react-flexbox-grid";
 import styled from "styled-components";
 import { ReactComponent as FaceMask } from "../Icons/FaceMask.svg";
@@ -9,7 +9,6 @@ import { ReactComponent as HandSanitizer} from '../Icons/disinfectant.svg';
 
 import ModalCustom from './ModalCustom';
 import { subscribe } from 'react-contextual';
-import { createDonation } from '../api';
 const { Content } = Layout;
 const { Title } = Typography;
 
@@ -114,18 +113,19 @@ const CollectionInfoContent =  subscribe()((props) => {
   async function submitData(e) {
 
     e.preventDefault();
+    console.log(address);
     setCurrentStep('success');
     // TODO: take only zip code and conver to address WE can do that
-    const payload = {
-      products: props.items,
-      address
-    };
+    // const payload = {
+    //   products: props.items,
+    //   address
+    // };
   
-    const result = await createDonation(payload);
-    if( !result){
-      message.error("error create donation");
-    }
-};
+    // const result = await createDonation(payload);
+    // if( !result){
+    //   message.error("error create donation");
+    // }
+  }
 
  
   return (

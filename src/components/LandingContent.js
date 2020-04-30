@@ -5,7 +5,6 @@ import CTARegister from './LandingPage/CTARegister'
 import styled from 'styled-components';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import firebase from '../firebase'
-import { subscribe } from 'react-contextual';
 const { Content } = Layout;
 
 
@@ -27,7 +26,7 @@ function LandingContent(props) {
             loggedIn: true
           });
           setCurrentStep('collectInfo');
-       
+
         } else {
           updateUser({
             loggedIn: false
@@ -58,4 +57,4 @@ function LandingContent(props) {
     </BlockContent>
   );
 }
-export default subscribe()(LandingContent);
+export default LandingContent;
