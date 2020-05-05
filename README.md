@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## To View Online
-Checkout staysafekeep.space
+Checkout https://staysafekeep.space
 
 ## Available Scripts
 
